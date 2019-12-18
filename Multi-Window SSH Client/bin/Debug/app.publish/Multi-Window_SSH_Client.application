@@ -14,7 +14,7 @@
     <framework targetVersion="4.7.2" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="Multi-Window_SSH_Client.exe.manifest" size="20844">
+    <dependentAssembly dependencyType="install" codebase="Application Files\Multi-Window_SSH_Client_1_0_0_32\Multi-Window_SSH_Client.exe.manifest" size="20844">
       <assemblyIdentity name="Multi-Window_SSH_Client.exe" version="1.0.0.32" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
