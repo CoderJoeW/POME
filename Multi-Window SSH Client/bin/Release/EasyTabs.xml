@@ -1,0 +1,1251 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EasyTabs</name>
+    </assembly>
+    <members>
+        <member name="T:EasyTabs.BaseTabRenderer">
+            <summary>
+            Provides the base functionality for any tab renderer, taking care of actually rendering and detecting whether the cursor is over a tab.  Any custom
+            tab renderer needs to inherit from this class, just as <see cref="T:EasyTabs.ChromeTabRenderer" /> does.
+            </summary>
+        </member>
+        <member name="F:EasyTabs.BaseTabRenderer._activeCenterImage">
+            <summary>
+            Background of the content area for the tab when the tab is active; its width also determines how wide the default content area for the tab
+            is.
+            </summary>
+        </member>
+        <member name="F:EasyTabs.BaseTabRenderer._activeLeftSideImage">
+            <summary>Image to display on the left side of an active tab.</summary>
+        </member>
+        <member name="F:EasyTabs.BaseTabRenderer._activeRightSideImage">
+            <summary>Image to display on the right side of an active tab.</summary>
+        </member>
+        <member name="F:EasyTabs.BaseTabRenderer._addButtonArea">
+            <summary>Area on the screen where the add button is located.</summary>
+        </member>
+        <member name="F:EasyTabs.BaseTabRenderer._addButtonHoverImage">
+            <summary>Image to display when the user hovers over the add button.</summary>
+        </member>
+        <member name="F:EasyTabs.BaseTabRenderer._addButtonImage">
+            <summary>Image to display for the add button when the user is not hovering over it.</summary>
+        </member>
+        <member name="F:EasyTabs.BaseTabRenderer._background">
+            <summary>The background, if any, that should be displayed in the non-client area behind the actual tabs.</summary>
+        </member>
+        <member name="F:EasyTabs.BaseTabRenderer._closeButtonHoverImage">
+            <summary>The hover-over image that should be displayed on each tab to close that tab.</summary>
+        </member>
+        <member name="F:EasyTabs.BaseTabRenderer._closeButtonImage">
+            <summary>The image that should be displayed on each tab to close that tab.</summary>
+        </member>
+        <member name="F:EasyTabs.BaseTabRenderer._dragStart">
+            <summary>When the user is dragging a tab, this represents the point where the user first clicked to start the drag operation.</summary>
+        </member>
+        <member name="F:EasyTabs.BaseTabRenderer._inactiveCenterImage">
+            <summary>
+            Background of the content area for the tab when the tab is inactive; its width also determines how wide the default content area for the tab
+            is.
+            </summary>
+        </member>
+        <member name="F:EasyTabs.BaseTabRenderer._inactiveLeftSideImage">
+            <summary>Image to display on the left side of an inactive tab.</summary>
+        </member>
+        <member name="F:EasyTabs.BaseTabRenderer._inactiveRightSideImage">
+            <summary>Image to display on the right side of an inactive tab.</summary>
+        </member>
+        <member name="F:EasyTabs.BaseTabRenderer._isTabRepositioning">
+            <summary>Flag indicating whether or not a tab is being repositioned.</summary>
+        </member>
+        <member name="F:EasyTabs.BaseTabRenderer._maxTabArea">
+            <summary>Maximum area on the screen that tabs may take up for this application.</summary>
+        </member>
+        <member name="F:EasyTabs.BaseTabRenderer._parentWindow">
+            <summary>The parent window that this renderer instance belongs to.</summary>
+        </member>
+        <member name="F:EasyTabs.BaseTabRenderer._previousTabCount">
+            <summary>The number of tabs that were present when we last rendered; used to determine whether or not we need to redraw tab instances.</summary>
+        </member>
+        <member name="F:EasyTabs.BaseTabRenderer._suspendRendering">
+            <summary>Flag indicating whether or not rendering has been suspended while we perform some operation.</summary>
+        </member>
+        <member name="F:EasyTabs.BaseTabRenderer._tabClickOffset">
+            <summary>When the user is dragging a tab, this represents the horizontal offset within the tab where the user clicked to start the drag operation.</summary>
+        </member>
+        <member name="F:EasyTabs.BaseTabRenderer._tabContentWidth">
+            <summary>The width of the content area that we should use for each tab.</summary>
+        </member>
+        <member name="F:EasyTabs.BaseTabRenderer._wasTabRepositioning">
+            <summary>Flag indicating whether or not a tab was being repositioned.</summary>
+        </member>
+        <member name="M:EasyTabs.BaseTabRenderer.#ctor(EasyTabs.TitleBarTabs)">
+            <summary>Default constructor that initializes the <see cref="F:EasyTabs.BaseTabRenderer._parentWindow" /> and <see cref="P:EasyTabs.BaseTabRenderer.ShowAddButton" /> properties.</summary>
+            <param name="parentWindow">The parent window that this renderer instance belongs to.</param>
+        </member>
+        <member name="P:EasyTabs.BaseTabRenderer.TabHeight">
+            <summary>Height of the tab content area; derived from the height of <see cref="F:EasyTabs.BaseTabRenderer._activeCenterImage" />.</summary>
+        </member>
+        <member name="P:EasyTabs.BaseTabRenderer.ShowAddButton">
+            <summary>Flag indicating whether or not we should display the add button.</summary>
+        </member>
+        <member name="P:EasyTabs.BaseTabRenderer.CaptionMarginLeft">
+            <summary>Amount of space we should put to the left of the caption when rendering the content area of the tab.</summary>
+        </member>
+        <member name="P:EasyTabs.BaseTabRenderer.CaptionMarginRight">
+            <summary>Amount of space that we should leave to the right of the caption when rendering the content area of the tab.</summary>
+        </member>
+        <member name="P:EasyTabs.BaseTabRenderer.CaptionMarginTop">
+            <summary>Amount of space that we should leave between the top of the content area and the top of the caption text.</summary>
+        </member>
+        <member name="P:EasyTabs.BaseTabRenderer.IconMarginLeft">
+            <summary>Amount of space we should put to the left of the tab icon when rendering the content area of the tab.</summary>
+        </member>
+        <member name="P:EasyTabs.BaseTabRenderer.IconMarginRight">
+            <summary>Amount of space that we should leave to the right of the icon when rendering the content area of the tab.</summary>
+        </member>
+        <member name="P:EasyTabs.BaseTabRenderer.IconMarginTop">
+            <summary>Amount of space that we should leave between the top of the content area and the top of the icon.</summary>
+        </member>
+        <member name="P:EasyTabs.BaseTabRenderer.CloseButtonMarginLeft">
+            <summary>Amount of space that we should put to the left of the close button when rendering the content area of the tab.</summary>
+        </member>
+        <member name="P:EasyTabs.BaseTabRenderer.CloseButtonMarginRight">
+            <summary>Amount of space that we should leave to the right of the close button when rendering the content area of the tab.</summary>
+        </member>
+        <member name="P:EasyTabs.BaseTabRenderer.CloseButtonMarginTop">
+            <summary>Amount of space that we should leave between the top of the content area and the top of the close button.</summary>
+        </member>
+        <member name="P:EasyTabs.BaseTabRenderer.AddButtonMarginLeft">
+            <summary>Amount of space that we should put to the left of the add tab button when rendering the content area of the tab.</summary>
+        </member>
+        <member name="P:EasyTabs.BaseTabRenderer.AddButtonMarginRight">
+            <summary>Amount of space that we should leave to the right of the add tab button when rendering the content area of the tab.</summary>
+        </member>
+        <member name="P:EasyTabs.BaseTabRenderer.AddButtonMarginTop">
+            <summary>Amount of space that we should leave between the top of the content area and the top of the add tab button.</summary>
+        </member>
+        <member name="P:EasyTabs.BaseTabRenderer.OverlapWidth">
+            <summary>
+            If the renderer overlaps the tabs (like Chrome), this is the width that the tabs should overlap by.  For renderers that do not overlap tabs (like
+            Firefox), this should be left at 0.
+            </summary>
+        </member>
+        <member name="P:EasyTabs.BaseTabRenderer.TabRepositionDragDistance">
+            <summary>Horizontal distance that a tab must be dragged before it starts to be repositioned.</summary>
+        </member>
+        <member name="P:EasyTabs.BaseTabRenderer.TabTearDragDistance">
+            <summary>Distance that a user must drag a tab outside of the tab area before it shows up as "torn" from its parent window.</summary>
+        </member>
+        <member name="P:EasyTabs.BaseTabRenderer.IsTabRepositioning">
+            <summary>Flag indicating whether or not a tab is being repositioned.</summary>
+        </member>
+        <member name="P:EasyTabs.BaseTabRenderer.TabContentWidth">
+            <summary>Width of the content area of the tabs.</summary>
+        </member>
+        <member name="P:EasyTabs.BaseTabRenderer.MaxTabArea">
+            <summary>Maximum area that the tabs can occupy.  Excludes the add button.</summary>
+        </member>
+        <member name="M:EasyTabs.BaseTabRenderer.Overlay_MouseDown(System.Object,System.Windows.Forms.MouseEventArgs)">
+            <summary>Initialize the <see cref="F:EasyTabs.BaseTabRenderer._dragStart" /> and <see cref="F:EasyTabs.BaseTabRenderer._tabClickOffset" /> fields in case the user starts dragging a tab.</summary>
+            <param name="sender">Object from which this event originated.</param>
+            <param name="e">Arguments associated with the event.</param>
+        </member>
+        <member name="M:EasyTabs.BaseTabRenderer.Overlay_MouseUp(System.Object,System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            End the drag operation by resetting the <see cref="F:EasyTabs.BaseTabRenderer._dragStart" /> and <see cref="F:EasyTabs.BaseTabRenderer._tabClickOffset" /> fields and setting
+            <see cref="P:EasyTabs.BaseTabRenderer.IsTabRepositioning" /> to false.
+            </summary>
+            <param name="sender">Object from which this event originated.</param>
+            <param name="e">Arguments associated with the event.</param>
+        </member>
+        <member name="M:EasyTabs.BaseTabRenderer.Overlay_MouseMove(System.Object,System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            If the user is dragging the mouse, see if they have passed the <see cref="P:EasyTabs.BaseTabRenderer.TabRepositionDragDistance" /> threshold and, if so, officially begin the
+            tab drag operation.
+            </summary>
+            <param name="sender">Object from which this event originated.</param>
+            <param name="e">Arguments associated with the event.</param>
+        </member>
+        <member name="M:EasyTabs.BaseTabRenderer.Tabs_CollectionModified(System.Object,EasyTabs.ListModificationEventArgs)">
+            <summary>
+            When items are added to the tabs collection, we need to ensure that the <see cref="F:EasyTabs.BaseTabRenderer._parentWindow" />'s minimum width is set so that we can display at
+            least each tab and its close buttons.
+            </summary>
+            <param name="sender">List of tabs in the <see cref="F:EasyTabs.BaseTabRenderer._parentWindow" />.</param>
+            <param name="e">Arguments associated with the event.</param>
+        </member>
+        <member name="M:EasyTabs.BaseTabRenderer.OverTab(System.Collections.Generic.IEnumerable{EasyTabs.TitleBarTab},System.Drawing.Point)">
+            <summary>
+            Called from the <see cref="F:EasyTabs.BaseTabRenderer._parentWindow" /> to determine which, if any, of the <paramref name="tabs" /> the <paramref name="cursor" /> is
+            over.
+            </summary>
+            <param name="tabs">The list of tabs that we should check.</param>
+            <param name="cursor">The relative position of the cursor within the window.</param>
+            <returns>The tab within <paramref name="tabs" /> that the <paramref name="cursor" /> is over; if none, then null is returned.</returns>
+        </member>
+        <member name="M:EasyTabs.BaseTabRenderer.IsOverNonTransparentArea(System.Drawing.Rectangle,System.Drawing.Bitmap,System.Drawing.Point)">
+            <summary>
+            Helper method to detect whether the <paramref name="cursor" /> is within the given <paramref name="area" /> and, if it is, whether it is over a
+            non-transparent pixel in the given <paramref name="image" />.
+            </summary>
+            <param name="area">Screen area that we should check to see if the <paramref name="cursor" /> is within.</param>
+            <param name="image">
+            Image contained within <paramref name="area" /> that we should check to see if the <paramref name="cursor" /> is over a non-
+            transparent pixel.
+            </param>
+            <param name="cursor">Current location of the cursor.</param>
+            <returns>
+            True if the <paramref name="cursor" /> is within the given <paramref name="area" /> and is over a non-transparent pixel in the
+            <paramref name="image" />.
+            </returns>
+        </member>
+        <member name="M:EasyTabs.BaseTabRenderer.IsOverAddButton(System.Drawing.Point)">
+            <summary>Tests whether the <paramref name="cursor" /> is hovering over the add tab button.</summary>
+            <param name="cursor">Current location of the cursor.</param>
+            <returns>
+            True if the <paramref name="cursor" /> is within <see cref="F:EasyTabs.BaseTabRenderer._addButtonArea" /> and is over a non-transparent pixel of
+            <see cref="F:EasyTabs.BaseTabRenderer._addButtonHoverImage" />, false otherwise.
+            </returns>
+        </member>
+        <member name="M:EasyTabs.BaseTabRenderer.IsOverTab(EasyTabs.TitleBarTab,System.Drawing.Point)">
+            <summary>Tests whether the <paramref name="cursor" /> is hovering over the given <paramref name="tab" />.</summary>
+            <param name="tab">Tab that we are to see if the cursor is hovering over.</param>
+            <param name="cursor">Current location of the cursor.</param>
+            <returns>
+            True if the <paramref name="cursor" /> is within the <see cref="P:EasyTabs.TitleBarTab.Area" /> of the <paramref name="tab" /> and is over a non- transparent
+            pixel of <see cref="P:EasyTabs.TitleBarTab.TabImage" />, false otherwise.
+            </returns>
+        </member>
+        <member name="M:EasyTabs.BaseTabRenderer.IsOverCloseButton(EasyTabs.TitleBarTab,System.Drawing.Point)">
+            <summary>Checks to see if the <paramref name="cursor" /> is over the <see cref="P:EasyTabs.TitleBarTab.CloseButtonArea" /> of the given <paramref name="tab" />.</summary>
+            <param name="tab">The tab whose <see cref="P:EasyTabs.TitleBarTab.CloseButtonArea" /> we are to check to see if it contains <paramref name="cursor" />.</param>
+            <param name="cursor">Current position of the cursor.</param>
+            <returns>True if the <paramref name="tab" />'s <see cref="P:EasyTabs.TitleBarTab.CloseButtonArea" /> contains <paramref name="cursor" />, false otherwise.</returns>
+        </member>
+        <member name="M:EasyTabs.BaseTabRenderer.Render(System.Collections.Generic.List{EasyTabs.TitleBarTab},System.Drawing.Graphics,System.Drawing.Point,System.Drawing.Point,System.Boolean)">
+            <summary>Renders the list of <paramref name="tabs" /> to the screen using the given <paramref name="graphicsContext" />.</summary>
+            <param name="tabs">List of tabs that we are to render.</param>
+            <param name="graphicsContext">Graphics context that we should use while rendering.</param>
+            <param name="cursor">Current location of the cursor on the screen.</param>
+            <param name="forceRedraw">Flag indicating whether or not the redraw should be forced.</param>
+            <param name="offset">Offset within <paramref name="graphicsContext" /> that the tabs should be rendered.</param>
+        </member>
+        <member name="M:EasyTabs.BaseTabRenderer.Render(System.Drawing.Graphics,EasyTabs.TitleBarTab,System.Drawing.Rectangle,System.Drawing.Point,System.Drawing.Image,System.Drawing.Image,System.Drawing.Image)">
+            <summary>Internal method for rendering an individual <paramref name="tab" /> to the screen.</summary>
+            <param name="graphicsContext">Graphics context to use when rendering the tab.</param>
+            <param name="tab">Individual tab that we are to render.</param>
+            <param name="area">Area of the screen that the tab should be rendered to.</param>
+            <param name="cursor">Current position of the cursor.</param>
+        </member>
+        <member name="M:EasyTabs.BaseTabRenderer.CombineTab(EasyTabs.TitleBarTab,System.Drawing.Point)">
+            <summary>
+            Called when a torn tab is dragged into the <see cref="P:EasyTabs.TitleBarTabs.TabDropArea" /> of <see cref="F:EasyTabs.BaseTabRenderer._parentWindow" />.  Places the tab in the list and
+            sets <see cref="P:EasyTabs.BaseTabRenderer.IsTabRepositioning" /> to true to simulate the user continuing to drag the tab around in the window.
+            </summary>
+            <param name="tab">Tab that was dragged into this window.</param>
+            <param name="cursorLocation">Location of the user's cursor.</param>
+        </member>
+        <member name="T:EasyTabs.ChromeTabRenderer">
+            <summary>Renderer that produces tabs that mimic the appearance of the Chrome browser.</summary>
+        </member>
+        <member name="M:EasyTabs.ChromeTabRenderer.#ctor(EasyTabs.TitleBarTabs)">
+            <summary>Constructor that initializes the various resources that we use in rendering.</summary>
+            <param name="parentWindow">Parent window that this renderer belongs to.</param>
+        </member>
+        <member name="P:EasyTabs.ChromeTabRenderer.OverlapWidth">
+            <summary>Since Chrome tabs overlap, we set this property to the amount that they overlap by.</summary>
+        </member>
+        <member name="T:EasyTabs.DisplayType">
+            <summary>The type of theme being used to render the desktop.</summary>
+        </member>
+        <member name="F:EasyTabs.DisplayType.Classic">
+            <summary>Windows 2000-esque theme.</summary>
+        </member>
+        <member name="F:EasyTabs.DisplayType.Basic">
+            <summary>Contemporary theme, but without Aero enabled.</summary>
+        </member>
+        <member name="F:EasyTabs.DisplayType.Aero">
+            <summary>Full compositing enabled in the theme.</summary>
+        </member>
+        <member name="T:EasyTabs.ListItemEventArgs">
+            <summary>Provides data for the <see cref="E:EasyTabs.ListWithEvents`1.ItemAdded" /> events.</summary>
+        </member>
+        <member name="F:EasyTabs.ListItemEventArgs._itemIndex">
+            <summary>Index of the item being changed.</summary>
+        </member>
+        <member name="M:EasyTabs.ListItemEventArgs.#ctor(System.Int32)">
+            <summary>Initializes a new instance of the <see cref="T:EasyTabs.ListItemEventArgs" /> class.</summary>
+            <param name="itemIndex">Index of the item being changed.</param>
+        </member>
+        <member name="P:EasyTabs.ListItemEventArgs.ItemIndex">
+            <summary>Gets the index of the item changed.</summary>
+        </member>
+        <member name="T:EasyTabs.ListModification">
+            <summary>List of possible <see cref="T:EasyTabs.ListWithEvents`1" /> modifications.</summary>
+        </member>
+        <member name="F:EasyTabs.ListModification.Cleared">
+            <summary>The list has been cleared.</summary>
+        </member>
+        <member name="F:EasyTabs.ListModification.ItemAdded">
+            <summary>A new item has been added.</summary>
+        </member>
+        <member name="F:EasyTabs.ListModification.ItemModified">
+            <summary>An item has been modified.</summary>
+        </member>
+        <member name="F:EasyTabs.ListModification.ItemRemoved">
+            <summary>An item has been removed.</summary>
+        </member>
+        <member name="F:EasyTabs.ListModification.RangeAdded">
+            <summary>A range of items has been added.</summary>
+        </member>
+        <member name="F:EasyTabs.ListModification.RangeRemoved">
+            <summary>A range of items has been removed.</summary>
+        </member>
+        <member name="T:EasyTabs.ListModificationEventArgs">
+            <summary>Provides data for the <see cref="E:EasyTabs.ListWithEvents`1.CollectionModified" /> events.</summary>
+        </member>
+        <member name="F:EasyTabs.ListModificationEventArgs._modification">
+            <summary>Modification being made to the list.</summary>
+        </member>
+        <member name="M:EasyTabs.ListModificationEventArgs.#ctor(EasyTabs.ListModification,System.Int32,System.Int32)">
+            <summary>Initializes a new instance of the <see cref="T:EasyTabs.ListModificationEventArgs" /> class.</summary>
+            <param name="modification">Modification being made to the list.</param>
+            <param name="startIndex">Index from which the modifications start.</param>
+            <param name="count">Number of modifications being made.</param>
+        </member>
+        <member name="P:EasyTabs.ListModificationEventArgs.Modification">
+            <summary>Gets the type of list modification.</summary>
+        </member>
+        <member name="T:EasyTabs.ListRangeEventArgs">
+            <summary>Provides data for the <see cref="E:EasyTabs.ListWithEvents`1.RangeAdded" /> events.</summary>
+        </member>
+        <member name="F:EasyTabs.ListRangeEventArgs._count">
+            <summary>Number of items in the range.</summary>
+        </member>
+        <member name="F:EasyTabs.ListRangeEventArgs._startIndex">
+            <summary>Index of the first item in the range.</summary>
+        </member>
+        <member name="M:EasyTabs.ListRangeEventArgs.#ctor(System.Int32,System.Int32)">
+            <summary>Initializes a new instance of the <see cref="T:EasyTabs.ListRangeEventArgs" /> class.</summary>
+            <param name="startIndex">Index of the first item in the range.</param>
+            <param name="count">Number of items in the range.</param>
+        </member>
+        <member name="P:EasyTabs.ListRangeEventArgs.StartIndex">
+            <summary>Gets the index of the first item in the range.</summary>
+        </member>
+        <member name="P:EasyTabs.ListRangeEventArgs.Count">
+            <summary>Gets the number of items in the range.</summary>
+        </member>
+        <member name="T:EasyTabs.ListWithEvents`1">
+            <summary>Represents a strongly typed list of objects with events.</summary>
+            <typeparam name="T">The type of elements in the list.</typeparam>
+        </member>
+        <member name="F:EasyTabs.ListWithEvents`1._syncRoot">
+            <summary>Synchronization root for thread safety.</summary>
+        </member>
+        <member name="F:EasyTabs.ListWithEvents`1._suppressEvents">
+            <summary>Flag indicating whether events are being suppressed during an operation.</summary>
+        </member>
+        <member name="M:EasyTabs.ListWithEvents`1.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:EasyTabs.ListWithEvents`1" /> class that is empty and has the default initial capacity.</summary>
+        </member>
+        <member name="M:EasyTabs.ListWithEvents`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Initializes a new instance of the <see cref="T:EasyTabs.ListWithEvents`1" /> class that contains elements copied from the specified collection and has
+            sufficient capacity to accommodate the number of elements copied.
+            </summary>
+            <param name="collection">The collection whose elements are copied to the new list.</param>
+            <exception cref="T:System.ArgumentNullException">The collection is null.</exception>
+        </member>
+        <member name="M:EasyTabs.ListWithEvents`1.#ctor(System.Int32)">
+            <summary>Initializes a new instance of the <see cref="T:EasyTabs.ListWithEvents`1" /> class that is empty and has the specified initial capacity.</summary>
+            <param name="capacity">The number of elements that the new list can initially store.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">The capacity is less than 0.</exception>
+        </member>
+        <member name="P:EasyTabs.ListWithEvents`1.EventsSuppressed">
+            <summary>Gets whether the events are currently being suppressed.</summary>
+        </member>
+        <member name="P:EasyTabs.ListWithEvents`1.Item(System.Int32)">
+            <summary>Overloads <see cref="P:System.Collections.Generic.List`1.Item(System.Int32)" />.</summary>
+        </member>
+        <member name="P:EasyTabs.ListWithEvents`1.SyncRoot">
+            <summary>Gets an object that can be used to synchronize access to the <see cref="T:EasyTabs.ListWithEvents`1" />.</summary>
+        </member>
+        <member name="M:EasyTabs.ListWithEvents`1.System#Collections#IList#Add(System.Object)">
+            <summary>Adds an item to the end of the list.</summary>
+            <param name="value">Item to add to the list.</param>
+            <returns>Index of the new item in the list.</returns>
+        </member>
+        <member name="M:EasyTabs.ListWithEvents`1.Clear">
+            <summary>Overloads <see cref="M:System.Collections.Generic.List`1.Clear" />.</summary>
+            <remarks>This operation is thread-safe.</remarks>
+        </member>
+        <member name="M:EasyTabs.ListWithEvents`1.RemoveAt(System.Int32)">
+            <summary>Overloads <see cref="M:System.Collections.Generic.List`1.RemoveAt(System.Int32)" />.</summary>
+            <remarks>This operation is thread-safe.</remarks>
+        </member>
+        <member name="E:EasyTabs.ListWithEvents`1.CollectionModified">
+            <summary>Occurs whenever the list's content is modified.</summary>
+        </member>
+        <member name="E:EasyTabs.ListWithEvents`1.Cleared">
+            <summary>Occurs whenever the list is cleared.</summary>
+        </member>
+        <member name="E:EasyTabs.ListWithEvents`1.ItemAdded">
+            <summary>Occurs whenever a new item is added to the list.</summary>
+        </member>
+        <member name="E:EasyTabs.ListWithEvents`1.ItemModified">
+            <summary>Occurs whenever a item is modified.</summary>
+        </member>
+        <member name="E:EasyTabs.ListWithEvents`1.ItemRemoved">
+            <summary>Occurs whenever an  item is removed from the list.</summary>
+        </member>
+        <member name="E:EasyTabs.ListWithEvents`1.RangeAdded">
+            <summary>Occurs whenever a range of items is added to the list.</summary>
+        </member>
+        <member name="E:EasyTabs.ListWithEvents`1.RangeRemoved">
+            <summary>Occurs whenever a range of items is removed from the list.</summary>
+        </member>
+        <member name="M:EasyTabs.ListWithEvents`1.Add(`0)">
+            <summary>Overloads <see cref="M:System.Collections.Generic.List`1.Add(`0)" />.</summary>
+            <remarks>This operation is thread-safe.</remarks>
+        </member>
+        <member name="M:EasyTabs.ListWithEvents`1.AddRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>Overloads <see cref="M:System.Collections.Generic.List`1.AddRange(System.Collections.Generic.IEnumerable{`0})" />.</summary>
+            <remarks>This operation is thread-safe.</remarks>
+        </member>
+        <member name="M:EasyTabs.ListWithEvents`1.Insert(System.Int32,`0)">
+            <summary>Overloads <see cref="M:System.Collections.Generic.List`1.Insert(System.Int32,`0)" />.</summary>
+            <remarks>This operation is thread-safe.</remarks>
+        </member>
+        <member name="M:EasyTabs.ListWithEvents`1.InsertRange(System.Int32,System.Collections.Generic.IEnumerable{`0})">
+            <summary>Overloads <see cref="M:System.Collections.Generic.List`1.InsertRange(System.Int32,System.Collections.Generic.IEnumerable{`0})" />.</summary>
+            <remarks>This operation is thread-safe.</remarks>
+        </member>
+        <member name="M:EasyTabs.ListWithEvents`1.Remove(`0)">
+            <summary>Overloads <see cref="M:System.Collections.Generic.List`1.Remove(`0)" />.</summary>
+            <remarks>This operation is thread-safe.</remarks>
+        </member>
+        <member name="M:EasyTabs.ListWithEvents`1.RemoveAll(System.Predicate{`0})">
+            <summary>Overloads <see cref="M:System.Collections.Generic.List`1.RemoveAll(System.Predicate{`0})" />.</summary>
+            <remarks>This operation is thread-safe.</remarks>
+        </member>
+        <member name="M:EasyTabs.ListWithEvents`1.RemoveRange(System.Int32,System.Int32)">
+            <summary>Overloads <see cref="M:System.Collections.Generic.List`1.RemoveRange(System.Int32,System.Int32)" />.</summary>
+            <remarks>This operation is thread-safe.</remarks>
+        </member>
+        <member name="M:EasyTabs.ListWithEvents`1.RemoveRange(System.Collections.Generic.List{`0})">
+            <summary>Removes the specified list of entries from the collection.</summary>
+            <param name="collection">Collection to be removed from the list.</param>
+            <remarks>
+            This operation employs <see cref="M:EasyTabs.ListWithEvents`1.Remove(`0)" /> method for removing each individual item which is thread-safe.  However overall operation isn't atomic,
+            and hence does not guarantee thread-safety.
+            </remarks>
+        </member>
+        <member name="M:EasyTabs.ListWithEvents`1.SuppressEvents">
+            <summary>Stops raising events until <see cref="M:EasyTabs.ListWithEvents`1.ResumeEvents" /> is called.</summary>
+        </member>
+        <member name="M:EasyTabs.ListWithEvents`1.ResumeEvents">
+            <summary>Resumes raising events after <see cref="M:EasyTabs.ListWithEvents`1.SuppressEvents" /> call.</summary>
+        </member>
+        <member name="M:EasyTabs.ListWithEvents`1.OnCleared(System.EventArgs)">
+            <summary>Raises <see cref="E:EasyTabs.ListWithEvents`1.CollectionModified" /> and <see cref="E:EasyTabs.ListWithEvents`1.Cleared" /> events.</summary>
+            <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
+        </member>
+        <member name="M:EasyTabs.ListWithEvents`1.OnCollectionModified(EasyTabs.ListModificationEventArgs)">
+            <summary>Raises <see cref="E:EasyTabs.ListWithEvents`1.CollectionModified" /> events.</summary>
+            <param name="e">An <see cref="T:EasyTabs.ListModificationEventArgs" /> that contains the event data.</param>
+        </member>
+        <member name="M:EasyTabs.ListWithEvents`1.OnItemAdded(EasyTabs.ListItemEventArgs)">
+            <summary>Raises <see cref="E:EasyTabs.ListWithEvents`1.CollectionModified" /> and <see cref="E:EasyTabs.ListWithEvents`1.ItemAdded" /> events.</summary>
+            <param name="e">An <see cref="T:EasyTabs.ListItemEventArgs" /> that contains the event data.</param>
+        </member>
+        <member name="M:EasyTabs.ListWithEvents`1.OnItemModified(EasyTabs.ListItemEventArgs)">
+            <summary>Raises <see cref="E:EasyTabs.ListWithEvents`1.CollectionModified" /> and <see cref="E:EasyTabs.ListWithEvents`1.ItemModified" /> events.</summary>
+            <param name="e">An <see cref="T:EasyTabs.ListItemEventArgs" /> that contains the event data.</param>
+        </member>
+        <member name="M:EasyTabs.ListWithEvents`1.OnItemRemoved(System.EventArgs)">
+            <summary>Raises <see cref="E:EasyTabs.ListWithEvents`1.CollectionModified" /> and <see cref="E:EasyTabs.ListWithEvents`1.ItemRemoved" /> events.</summary>
+            <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
+        </member>
+        <member name="M:EasyTabs.ListWithEvents`1.OnRangeAdded(EasyTabs.ListRangeEventArgs)">
+            <summary>Raises <see cref="E:EasyTabs.ListWithEvents`1.CollectionModified" /> and <see cref="E:EasyTabs.ListWithEvents`1.RangeAdded" /> events.</summary>
+            <param name="e">An <see cref="T:EasyTabs.ListRangeEventArgs" /> that contains the event data.</param>
+        </member>
+        <member name="M:EasyTabs.ListWithEvents`1.OnRangeRemoved(System.EventArgs)">
+            <summary>Raises <see cref="E:EasyTabs.ListWithEvents`1.CollectionModified" /> and <see cref="E:EasyTabs.ListWithEvents`1.RangeRemoved" /> events.</summary>
+            <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
+        </member>
+        <member name="T:EasyTabs.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:EasyTabs.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:EasyTabs.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:EasyTabs.Resources.ChromeAdd">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:EasyTabs.Resources.ChromeAddHover">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:EasyTabs.Resources.ChromeBackground">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:EasyTabs.Resources.ChromeCenter">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:EasyTabs.Resources.ChromeClose">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:EasyTabs.Resources.ChromeCloseHover">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:EasyTabs.Resources.ChromeInactiveCenter">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:EasyTabs.Resources.ChromeInactiveLeft">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:EasyTabs.Resources.ChromeInactiveRight">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:EasyTabs.Resources.ChromeInactiveRightShadow">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:EasyTabs.Resources.ChromeLeft">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:EasyTabs.Resources.ChromeRight">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="T:EasyTabs.TitleBarTab">
+            <summary>Wraps a <see cref="T:System.Windows.Forms.Form" /> instance (<see cref="F:EasyTabs.TitleBarTab._content" />), that represents the content that should be displayed within a tab instance.</summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTab._active">
+            <summary>Flag indicating whether or not this tab is active.</summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTab._content">
+            <summary>Content that should be displayed within the tab.</summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTab._parent">
+            <summary>Parent window that contains this tab.</summary>
+        </member>
+        <member name="M:EasyTabs.TitleBarTab.#ctor(EasyTabs.TitleBarTabs)">
+            <summary>Default constructor that initializes the various properties.</summary>
+            <param name="parent">Parent window that contains this tab.</param>
+        </member>
+        <member name="P:EasyTabs.TitleBarTab.Parent">
+            <summary>Parent window that contains this tab.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTab.ShowCloseButton">
+            <summary>Flag indicating whether or not we should display the close button for this tab.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTab.Caption">
+            <summary>The caption that's displayed in the tab's title (simply uses the <see cref="P:System.Windows.Forms.Form.Text" /> of
+            <see cref="P:EasyTabs.TitleBarTab.Content" />).</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTab.Active">
+            <summary>Flag indicating whether or not this tab is active.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTab.Icon">
+            <summary>The icon that's displayed in the tab's title (simply uses the <see cref="P:System.Windows.Forms.Form.Icon" /> of <see cref="P:EasyTabs.TitleBarTab.Content" />).</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTab.Area">
+            <summary>The area in which the tab is rendered in the client window.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTab.CloseButtonArea">
+            <summary>The area of the close button for this tab in the client window.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTab.TabImage">
+            <summary>Pre-rendered image of the tab's background.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTab.Content">
+            <summary>The content that should be displayed for this tab.</summary>
+        </member>
+        <member name="M:EasyTabs.TitleBarTab.GetImage">
+            <summary>
+            Called from <see cref="T:EasyTabs.TornTabForm" /> when we need to generate a thumbnail for a tab when it is torn out of its parent window.  We simply call
+            <see cref="M:System.Drawing.Graphics.CopyFromScreen(System.Drawing.Point,System.Drawing.Point,System.Drawing.Size)" /> to copy the screen contents to a
+            <see cref="T:System.Drawing.Bitmap" />.
+            </summary>
+            <returns>An image of the tab's contents.</returns>
+        </member>
+        <member name="E:EasyTabs.TitleBarTab.Closing">
+            <summary>Event that is fired when <see cref="P:EasyTabs.TitleBarTab.Content" />'s <see cref="E:System.Windows.Forms.Form.Closing" /> event is fired.</summary>
+        </member>
+        <member name="E:EasyTabs.TitleBarTab.TextChanged">
+            <summary>Event that is fired when <see cref="P:EasyTabs.TitleBarTab.Content" />'s <see cref="E:System.Windows.Forms.Control.TextChanged" /> event is fired.</summary>
+        </member>
+        <member name="M:EasyTabs.TitleBarTab.Content_TextChanged(System.Object,System.EventArgs)">
+            <summary>
+            Event handler that is invoked when <see cref="P:EasyTabs.TitleBarTab.Content" />'s <see cref="E:System.Windows.Forms.Control.TextChanged" /> event is fired, which in turn fires this class'
+            <see cref="E:EasyTabs.TitleBarTab.TextChanged" /> event.
+            </summary>
+            <param name="sender">Object from which this event originated (<see cref="P:EasyTabs.TitleBarTab.Content" /> in this case).</param>
+            <param name="e">Arguments associated with the event.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTab.Content_Closing(System.Object,System.ComponentModel.CancelEventArgs)">
+            <summary>
+            Event handler that is invoked when <see cref="P:EasyTabs.TitleBarTab.Content" />'s <see cref="E:System.Windows.Forms.Form.Closing" /> event is fired, which in turn fires this class'
+            <see cref="E:EasyTabs.TitleBarTab.Closing" /> event.
+            </summary>
+            <param name="sender">Object from which this event originated (<see cref="P:EasyTabs.TitleBarTab.Content" /> in this case).</param>
+            <param name="e">Arguments associated with the event.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTab.ClearSubscriptions">
+            <summary>Unsubscribes the tab from any event handlers that may have been attached to its <see cref="E:EasyTabs.TitleBarTab.Closing" /> or <see cref="E:EasyTabs.TitleBarTab.TextChanged" /> events.</summary>
+        </member>
+        <member name="T:EasyTabs.TitleBarTabCancelEventArgs">
+            <summary>Event arguments class for a cancelable event that occurs on a collection of collection of <see cref="T:EasyTabs.TitleBarTab" />s.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabCancelEventArgs.Action">
+            <summary>Action that is being performed.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabCancelEventArgs.Tab">
+            <summary>The tab that the <see cref="P:EasyTabs.TitleBarTabCancelEventArgs.Action" /> is being performed on.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabCancelEventArgs.TabIndex">
+            <summary>Index of the tab within the collection.</summary>
+        </member>
+        <member name="T:EasyTabs.TitleBarTabEventArgs">
+            <summary>Event arguments class for an event that occurs on a collection of collection of <see cref="T:EasyTabs.TitleBarTab" />s.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabEventArgs.Action">
+            <summary>Action that is being performed.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabEventArgs.Tab">
+            <summary>The tab that the <see cref="P:EasyTabs.TitleBarTabEventArgs.Action" /> is being performed on.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabEventArgs.TabIndex">
+            <summary>Index of the tab within the collection.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabEventArgs.WasDragging">
+            <summary>Flag indicating if the user was dragging the tab when the event occurred.</summary>
+        </member>
+        <member name="T:EasyTabs.TitleBarTabs">
+            <summary>
+            Base class that contains the functionality to render tabs within a WinForms application's title bar area. This  is done through a borderless overlay
+            window (<see cref="F:EasyTabs.TitleBarTabs._overlay" />) rendered on top of the non-client area at the top of this window.  All an implementing class will need to do is set
+            the <see cref="P:EasyTabs.TitleBarTabs.TabRenderer" /> property and begin adding tabs to <see cref="P:EasyTabs.TitleBarTabs.Tabs" />.
+            </summary>
+        </member>
+        <member name="T:EasyTabs.TitleBarTabs.TitleBarTabCancelEventHandler">
+            <summary>
+            Event delegate for <see cref="E:EasyTabs.TitleBarTabs.TabDeselecting" /> and <see cref="E:EasyTabs.TitleBarTabs.TabSelecting" /> that allows subscribers to cancel the
+            event and keep it from proceeding.
+            </summary>
+            <param name="sender">Object for which this event was raised.</param>
+            <param name="e">Data associated with the event.</param>
+        </member>
+        <member name="T:EasyTabs.TitleBarTabs.TitleBarTabEventHandler">
+            <summary>Event delegate for <see cref="E:EasyTabs.TitleBarTabs.TabSelected" /> and <see cref="E:EasyTabs.TitleBarTabs.TabDeselected" />.</summary>
+            <param name="sender">Object for which this event was raised.</param>
+            <param name="e">Data associated with the event.</param>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabs._aeroPeekEnabled">
+            <summary>Flag indicating whether or not each tab has an Aero Peek entry allowing the user to switch between tabs from the taskbar.</summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabs._nonClientAreaHeight">
+            <summary>Height of the non-client area at the top of the window.</summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabs._overlay">
+            <summary>Borderless window that is rendered over top of the non-client area of this window.</summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabs._previews">
+            <summary>The preview images for each tab used to display each tab when Aero Peek is activated.</summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabs._previousActiveTab">
+            <summary>
+            When switching between tabs, this keeps track of the tab that was previously active so that, when it is switched away from, we can generate a fresh
+            Aero Peek preview image for it.
+            </summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabs._previousWindowState">
+            <summary>Maintains the previous window state so that we can respond properly to maximize/restore events in <see cref="M:EasyTabs.TitleBarTabs.OnSizeChanged(System.EventArgs)" />.</summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabs._tabRenderer">
+            <summary>Class responsible for actually rendering the tabs in <see cref="F:EasyTabs.TitleBarTabs._overlay" />.</summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabs._tabs">
+            <summary>List of tabs to display for this window.</summary>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.#ctor">
+            <summary>Default constructor.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabs.IsCompositionEnabled">
+            <summary>Flag indicating whether composition is enabled on the desktop.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabs.AeroPeekEnabled">
+            <summary>Flag indicating whether or not each tab has an Aero Peek entry allowing the user to switch between tabs from the taskbar.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabs.Tabs">
+            <summary>List of tabs to display for this window.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabs.TabRenderer">
+            <summary>The renderer to use when drawing the tabs.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabs.SelectedTab">
+            <summary>The tab that is currently selected by the user.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabs.SelectedTabIndex">
+            <summary>Gets or sets the index of the tab that is currently selected by the user.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabs.ExitOnLastTabClose">
+            <summary>Flag indicating whether the application itself should exit when the last tab is closed.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabs.IsClosing">
+            <summary>Flag indicating whether we are in the process of closing the window.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabs.ApplicationContext">
+            <summary>Application context under which this particular window runs.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabs.NonClientAreaHeight">
+            <summary>Height of the "glassed" area of the window's non-client area.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabs.TabDropArea">
+            <summary>Area of the screen in which tabs can be dropped for this window.</summary>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.SetWindowThemeAttributes(Win32Interop.Enums.WTNCA)">
+            <summary>Calls <see cref="M:Win32Interop.Methods.Uxtheme.SetWindowThemeAttribute(System.IntPtr,Win32Interop.Enums.WINDOWTHEMEATTRIBUTETYPE,Win32Interop.Structs.WTA_OPTIONS@,System.UInt32)" /> to set various attributes on the window.</summary>
+            <param name="attributes">Attributes to set on the window.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.OnLoad(System.EventArgs)">
+            <summary>
+            Event handler that is invoked when the <see cref="E:System.Windows.Forms.Form.Load" /> event is fired.  Instantiates <see cref="F:EasyTabs.TitleBarTabs._overlay" /> and clears out the window's
+            caption.
+            </summary>
+            <param name="e">Arguments associated with the event.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.SetFrameSize">
+            <summary>
+            When the window's state (maximized, minimized, or restored) changes, this sets the size of the non-client area at the top of the window properly so
+            that the tabs can be displayed.
+            </summary>
+        </member>
+        <member name="E:EasyTabs.TitleBarTabs.TabDeselecting">
+            <summary>Event that is raised immediately prior to a tab being deselected (<see cref="E:EasyTabs.TitleBarTabs.TabDeselected" />).</summary>
+        </member>
+        <member name="E:EasyTabs.TitleBarTabs.TabDeselected">
+            <summary>Event that is raised after a tab has been deselected.</summary>
+        </member>
+        <member name="E:EasyTabs.TitleBarTabs.TabSelecting">
+            <summary>Event that is raised immediately prior to a tab being selected (<see cref="E:EasyTabs.TitleBarTabs.TabSelected" />).</summary>
+        </member>
+        <member name="E:EasyTabs.TitleBarTabs.TabSelected">
+            <summary>Event that is raised after a tab has been selected.</summary>
+        </member>
+        <member name="E:EasyTabs.TitleBarTabs.TabClicked">
+            <summary>Event that is raised after a tab has been clicked.</summary>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.CreateTab">
+            <summary>
+            Callback that should be implemented by the inheriting class that will create a new <see cref="T:EasyTabs.TitleBarTab" /> object when the add button is
+            clicked.
+            </summary>
+            <returns>A newly created tab.</returns>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.OnTabClicked(EasyTabs.TitleBarTabEventArgs)">
+            <summary>Callback for the <see cref="E:EasyTabs.TitleBarTabs.TabClicked" /> event.</summary>
+            <param name="e">Arguments associated with the event.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.OnTabDeselecting(EasyTabs.TitleBarTabCancelEventArgs)">
+            <summary>
+            Callback for the <see cref="E:EasyTabs.TitleBarTabs.TabDeselecting" /> event.  Called when a <see cref="T:EasyTabs.TitleBarTab" /> is in the process of losing focus.  Grabs an image of
+            the tab's content to be used when Aero Peek is activated.
+            </summary>
+            <param name="e">Arguments associated with the event.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.UpdateTabThumbnail(EasyTabs.TitleBarTab)">
+            <summary>Generate a new thumbnail image for <paramref name="tab" />.</summary>
+            <param name="tab">Tab that we need to generate a thumbnail for.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.OnTabDeselected(EasyTabs.TitleBarTabEventArgs)">
+            <summary>Callback for the <see cref="E:EasyTabs.TitleBarTabs.TabDeselected" /> event.</summary>
+            <param name="e">Arguments associated with the event.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.OnTabSelecting(EasyTabs.TitleBarTabCancelEventArgs)">
+            <summary>Callback for the <see cref="E:EasyTabs.TitleBarTabs.TabSelecting" /> event.</summary>
+            <param name="e">Arguments associated with the event.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.OnTabSelected(EasyTabs.TitleBarTabEventArgs)">
+            <summary>
+            Callback for the <see cref="E:EasyTabs.TitleBarTabs.TabSelected" /> event.  Called when a <see cref="T:EasyTabs.TitleBarTab" /> gains focus.  Sets the active window in Aero Peek via a
+            call to <see cref="M:Microsoft.WindowsAPICodePack.Taskbar.TabbedThumbnailManager.SetActiveTab(System.Windows.Forms.Control)" />.
+            </summary>
+            <param name="e">Arguments associated with the event.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.preview_TabbedThumbnailBitmapRequested(System.Object,Microsoft.WindowsAPICodePack.Taskbar.TabbedThumbnailBitmapRequestedEventArgs)">
+            <summary>
+            Handler method that's called when Aero Peek needs to display a thumbnail for a <see cref="T:EasyTabs.TitleBarTab" />; finds the preview bitmap generated in
+            <see cref="E:EasyTabs.TitleBarTabs.TabDeselecting" /> and returns that.
+            </summary>
+            <param name="sender">Object from which this event originated.</param>
+            <param name="e">Arguments associated with this event.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.OnClientSizeChanged(System.EventArgs)">
+            <summary>
+            Callback for the <see cref="E:System.Windows.Forms.Control.ClientSizeChanged" /> event that resizes the <see cref="P:EasyTabs.TitleBarTab.Content" /> form of the currently selected
+            tab when the size of the client area for this window changes.
+            </summary>
+            <param name="e">Arguments associated with the event.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.ResizeTabContents(EasyTabs.TitleBarTab)">
+            <summary>Resizes the <see cref="P:EasyTabs.TitleBarTab.Content" /> form of the <paramref name="tab" /> to match the size of the client area for this window.</summary>
+            <param name="tab">Tab whose <see cref="P:EasyTabs.TitleBarTab.Content" /> form we should resize; if not specified, we default to
+            <see cref="P:EasyTabs.TitleBarTabs.SelectedTab" />.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.OnPaintBackground(System.Windows.Forms.PaintEventArgs)">
+            <summary>Override of the handler for the paint background event that is left blank so that code is never executed.</summary>
+            <param name="e">Arguments associated with the event.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.ForwardMessage(System.Windows.Forms.Message@)">
+            <summary>Forwards a message received by <see cref="T:EasyTabs.TitleBarTabsOverlay" /> to the underlying window.</summary>
+            <param name="m">Message received by the overlay.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.preview_TabbedThumbnailActivated(System.Object,Microsoft.WindowsAPICodePack.Taskbar.TabbedThumbnailEventArgs)">
+            <summary>
+            Handler method that's called when the user clicks on an Aero Peek preview thumbnail.  Finds the tab associated with the thumbnail and
+            focuses on it.
+            </summary>
+            <param name="sender">Object from which this event originated.</param>
+            <param name="e">Arguments associated with this event.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.preview_TabbedThumbnailClosed(System.Object,Microsoft.WindowsAPICodePack.Taskbar.TabbedThumbnailEventArgs)">
+            <summary>
+            Handler method that's called when the user clicks the close button in an Aero Peek preview thumbnail.  Finds the window associated with the thumbnail
+            and calls <see cref="M:System.Windows.Forms.Form.Close" /> on it.
+            </summary>
+            <param name="sender">Object from which this event originated.</param>
+            <param name="e">Arguments associated with this event.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs._tabs_CollectionModified(System.Object,EasyTabs.ListModificationEventArgs)">
+            <summary>Callback that is invoked whenever anything is added or removed from <see cref="P:EasyTabs.TitleBarTabs.Tabs" /> so that we can trigger a redraw of the tabs.</summary>
+            <param name="sender">Object for which this event was raised.</param>
+            <param name="e">Arguments associated with the event.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.CreateThumbnailPreview(EasyTabs.TitleBarTab)">
+            <summary>
+            Creates a new thumbnail for <paramref name="tab" /> when the application is initially enabled for AeroPeek or when it is turned on sometime during
+            execution.
+            </summary>
+            <param name="tab">Tab that we are to create the thumbnail for.</param>
+            <returns>Thumbnail created for <paramref name="tab" />.</returns>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.UpdateThumbnailPreviewIcon(EasyTabs.TitleBarTab,System.Drawing.Icon)">
+            <summary>
+            When a child tab updates its <see cref="P:System.Windows.Forms.Form.Icon"/> property, it should call this method to update the icon in the AeroPeek preview.
+            </summary>
+            <param name="tab">Tab whose icon was updated.</param>
+            <param name="icon">The new icon to use.  If this is left as null, we use <see cref="P:System.Windows.Forms.Form.Icon"/> on <paramref name="tab"/>.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.Content_TextChanged(System.Object,System.EventArgs)">
+            <summary>
+            Event handler that is called when a tab's <see cref="P:System.Windows.Forms.Form.Text" /> property is changed, which re-renders the tab text and updates the title of the
+            Aero Peek preview.
+            </summary>
+            <param name="sender">Object from which this event originated (the <see cref="P:EasyTabs.TitleBarTab.Content" /> object in this case).</param>
+            <param name="e">Arguments associated with the event.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.TitleBarTabs_Closing(System.Object,System.ComponentModel.CancelEventArgs)">
+            <summary>
+            Event handler that is called when a tab's <see cref="E:EasyTabs.TitleBarTab.Closing" /> event is fired, which removes the tab from <see cref="P:EasyTabs.TitleBarTabs.Tabs" /> and
+            re-renders <see cref="F:EasyTabs.TitleBarTabs._overlay" />.
+            </summary>
+            <param name="sender">Object from which this event originated (the <see cref="T:EasyTabs.TitleBarTab" /> in this case).</param>
+            <param name="e">Arguments associated with the event.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.RedrawTabs">
+            <summary>
+            Calls <see cref="M:EasyTabs.TitleBarTabsOverlay.Render(System.Boolean)"/> on <see cref="F:EasyTabs.TitleBarTabs._overlay"/> to force a redrawing of the tabs.
+            </summary>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.OnSizeChanged(System.EventArgs)">
+            <summary>
+            Overrides the <see cref="E:System.Windows.Forms.Control.SizeChanged" /> handler so that we can detect when the user has maximized or restored the window and adjust the size
+            of the non-client area accordingly.
+            </summary>
+            <param name="e">Arguments associated with the event.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.WndProc(System.Windows.Forms.Message@)">
+            <summary>Overrides the message processor for the window so that we can respond to windows events to render and manipulate the tabs properly.</summary>
+            <param name="m">Message received by the pump.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.AddNewTab">
+            <summary>Calls <see cref="M:EasyTabs.TitleBarTabs.CreateTab" />, adds the resulting tab to the <see cref="P:EasyTabs.TitleBarTabs.Tabs" /> collection, and activates it.</summary>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.CloseTab(EasyTabs.TitleBarTab)">
+            <summary>Removes <paramref name="closingTab" /> from <see cref="P:EasyTabs.TitleBarTabs.Tabs" /> and selects the next applicable tab in the list.</summary>
+            <param name="closingTab">Tab that is being closed.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.HitTest(System.Drawing.Point,System.IntPtr)">
+            <summary>Called when a <see cref="F:Win32Interop.Enums.WM.WM_NCHITTEST" /> message is received to see where in the non-client area the user clicked.</summary>
+            <param name="point">Screen location that we are to test.</param>
+            <param name="windowHandle">Handle to the window for which we are performing the test.</param>
+            <returns>One of the <see cref="T:Win32Interop.Enums.HT" /> values, depending on where the user clicked.</returns>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabs.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabs.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:EasyTabs.TitleBarTabsApplicationContext">
+            <summary>
+            Application context to use when starting a <see cref="T:EasyTabs.TitleBarTabs" /> application via <see cref="M:System.Windows.Forms.Application.Run(System.Windows.Forms.ApplicationContext)" />.  Used to
+            track open windows so that the entire application doesn't quit when the first-opened window is closed.
+            </summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabsApplicationContext._openWindows">
+            <summary>List of all opened windows.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabsApplicationContext.OpenWindows">
+            <summary>List of all opened windows.</summary>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabsApplicationContext.Start(EasyTabs.TitleBarTabs)">
+            <summary>Constructor; takes the initial window to display and, if it's not closing, opens it and shows it.</summary>
+            <param name="initialFormInstance">Initial window to display.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabsApplicationContext.OpenWindow(EasyTabs.TitleBarTabs)">
+            <summary>
+            Adds <paramref name="window" /> to <see cref="F:EasyTabs.TitleBarTabsApplicationContext._openWindows" /> and attaches event handlers to its <see cref="E:System.Windows.Forms.Form.FormClosed" /> event to keep track
+            of it.
+            </summary>
+            <param name="window">Window that we're opening.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabsApplicationContext.window_FormClosed(System.Object,System.Windows.Forms.FormClosedEventArgs)">
+            <summary>
+            Handler method that's called when an item in <see cref="F:EasyTabs.TitleBarTabsApplicationContext._openWindows" /> has its <see cref="E:System.Windows.Forms.Form.FormClosed" /> event invoked.  Removes the window
+            from <see cref="F:EasyTabs.TitleBarTabsApplicationContext._openWindows" /> and, if there are no more windows open, calls <see cref="M:System.Windows.Forms.ApplicationContext.ExitThread" />.
+            </summary>
+            <param name="sender">Object from which this event originated.</param>
+            <param name="e">Arguments associated with the event.</param>
+        </member>
+        <member name="T:EasyTabs.TitleBarTabsOverlay">
+            <summary>
+            Borderless overlay window that is moved with and rendered on top of the non-client area of a  <see cref="T:EasyTabs.TitleBarTabs" /> instance that's responsible
+            for rendering the actual tab content and responding to click events for those tabs.
+            </summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabsOverlay._parents">
+            <summary>All of the parent forms and their overlays so that we don't create duplicate overlays across the application domain.</summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabsOverlay._tornTab">
+            <summary>Tab that has been torn off from this window and is being dragged.</summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabsOverlay._tornTabForm">
+            <summary>Thumbnail representation of <see cref="F:EasyTabs.TitleBarTabsOverlay._tornTab" /> used when dragging.</summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabsOverlay._wasDragging">
+            <summary>
+            Flag used in <see cref="M:EasyTabs.TitleBarTabsOverlay.WndProc(System.Windows.Forms.Message@)" /> and <see cref="M:EasyTabs.TitleBarTabsOverlay.MouseHookCallback(System.Int32,System.IntPtr,System.IntPtr)" /> to track whether the user was click/dragging when a particular event
+            occurred.
+            </summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabsOverlay._hookProcInstalled">
+            <summary>Flag indicating whether or not <see cref="F:EasyTabs.TitleBarTabsOverlay._hookproc" /> has been installed as a hook.</summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabsOverlay._tornTabLock">
+            <summary>Semaphore to control access to <see cref="F:EasyTabs.TitleBarTabsOverlay._tornTab" />.</summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabsOverlay._active">
+            <summary>Flag indicating whether or not the underlying window is active.</summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabsOverlay._aeroEnabled">
+            <summary>Flag indicating whether we should draw the titlebar background (i.e. we are in a non-Aero environment).</summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabsOverlay._dropAreas">
+            <summary>
+            When a tab is torn from the window, this is where we store the areas on all open windows where tabs can be dropped to combine the tab with that
+            window.
+            </summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabsOverlay._hookId">
+            <summary>Pointer to the low-level mouse hook callback (<see cref="M:EasyTabs.TitleBarTabsOverlay.MouseHookCallback(System.Int32,System.IntPtr,System.IntPtr)" />).</summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabsOverlay._hookproc">
+            <summary>Delegate of <see cref="M:EasyTabs.TitleBarTabsOverlay.MouseHookCallback(System.Int32,System.IntPtr,System.IntPtr)" />; declared as a member variable to keep it from being garbage collected.</summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabsOverlay._isOverCloseButtonForTab">
+            <summary>Index of the tab, if any, whose close button is being hovered over.</summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabsOverlay._mouseEvents">
+            <summary>Queue of mouse events reported by <see cref="F:EasyTabs.TitleBarTabsOverlay._hookproc" /> that need to be processed.</summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabsOverlay._mouseEventsThread">
+            <summary>Consumer thread for processing events in <see cref="F:EasyTabs.TitleBarTabsOverlay._mouseEvents" />.</summary>
+        </member>
+        <member name="F:EasyTabs.TitleBarTabsOverlay._parentForm">
+            <summary>Parent form for the overlay.</summary>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabsOverlay.#ctor">
+            <summary>Blank default constructor to ensure that the overlays are only initialized through <see cref="M:EasyTabs.TitleBarTabsOverlay.GetInstance(EasyTabs.TitleBarTabs)" />.</summary>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabsOverlay.#ctor(EasyTabs.TitleBarTabs)">
+            <summary>Creates the overlay window and attaches it to <paramref name="parentForm" />.</summary>
+            <param name="parentForm">Parent form that the overlay should be rendered on top of.</param>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabsOverlay.CreateParams">
+            <summary>
+            Makes sure that the window is created with an <see cref="F:Win32Interop.Enums.WS_EX.WS_EX_LAYERED" /> flag set so that it can be alpha-blended properly with the content (
+            <see cref="F:EasyTabs.TitleBarTabsOverlay._parentForm" />) underneath the overlay.
+            </summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabsOverlay.TitleBarColor">
+            <summary>Primary color for the titlebar background.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabsOverlay.DisplayType">
+            <summary>Type of theme being used by the OS to render the desktop.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabsOverlay.TitleBarGradientColor">
+            <summary>Gradient color for the titlebar background.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabsOverlay.TabDropArea">
+            <summary>Screen area in which tabs can be dragged to and dropped for this window.</summary>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabsOverlay.GetInstance(EasyTabs.TitleBarTabs)">
+            <summary>Retrieves or creates the overlay for <paramref name="parentForm" />.</summary>
+            <param name="parentForm">Parent form that we are to create the overlay for.</param>
+            <returns>Newly-created or previously existing overlay for <paramref name="parentForm" />.</returns>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabsOverlay.AttachHandlers">
+            <summary>
+            Attaches the various event handlers to <see cref="F:EasyTabs.TitleBarTabsOverlay._parentForm" /> so that the overlay is moved in synchronization to
+            <see cref="F:EasyTabs.TitleBarTabsOverlay._parentForm" />.
+            </summary>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabsOverlay._parentForm_Closing(System.Object,System.ComponentModel.CancelEventArgs)">
+            <summary>
+            Event handler that is called when <see cref="F:EasyTabs.TitleBarTabsOverlay._parentForm" /> is in the process of closing.  This uninstalls <see cref="F:EasyTabs.TitleBarTabsOverlay._hookproc" /> from the low-
+            level hooks list and stops the consumer thread that processes those events.
+            </summary>
+            <param name="sender">Object from which this event originated, <see cref="F:EasyTabs.TitleBarTabsOverlay._parentForm" /> in this case.</param>
+            <param name="e">Arguments associated with this event.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabsOverlay.InterpretMouseEvents">
+            <summary>Consumer method that processes mouse events in <see cref="F:EasyTabs.TitleBarTabsOverlay._mouseEvents" /> that are recorded by <see cref="M:EasyTabs.TitleBarTabsOverlay.MouseHookCallback(System.Int32,System.IntPtr,System.IntPtr)" />.</summary>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabsOverlay.MouseHookCallback(System.Int32,System.IntPtr,System.IntPtr)">
+            <summary>Hook callback to process <see cref="F:Win32Interop.Enums.WM.WM_MOUSEMOVE" /> messages to highlight/un-highlight the close button on each tab.</summary>
+            <param name="nCode">The message being received.</param>
+            <param name="wParam">Additional information about the message.</param>
+            <param name="lParam">Additional information about the message.</param>
+            <returns>A zero value if the procedure processes the message; a nonzero value if the procedure ignores the message.</returns>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabsOverlay.DrawTitleBarBackground(System.Drawing.Graphics)">
+            <summary>Draws the titlebar background behind the tabs if Aero glass is not enabled.</summary>
+            <param name="graphics">Graphics context with which to draw the background.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabsOverlay._parentForm_SystemColorsChanged(System.Object,System.EventArgs)">
+            <summary>
+            Event handler that is called when <see cref="F:EasyTabs.TitleBarTabsOverlay._parentForm" />'s <see cref="E:System.Windows.Forms.Control.SystemColorsChanged" /> event is fired which re-renders
+            the tabs.
+            </summary>
+            <param name="sender">Object from which the event originated.</param>
+            <param name="e">Arguments associated with the event.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabsOverlay._parentForm_Refresh(System.Object,System.EventArgs)">
+            <summary>
+            Event handler that is called when <see cref="F:EasyTabs.TitleBarTabsOverlay._parentForm" />'s <see cref="E:System.Windows.Forms.Control.SizeChanged" />, <see cref="E:System.Windows.Forms.Control.VisibleChanged" />, or
+            <see cref="E:System.Windows.Forms.Control.Move" /> events are fired which re-renders the tabs.
+            </summary>
+            <param name="sender">Object from which the event originated.</param>
+            <param name="e">Arguments associated with the event.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabsOverlay.OnPosition">
+            <summary>Sets the position of the overlay window to match that of <see cref="F:EasyTabs.TitleBarTabsOverlay._parentForm" /> so that it moves in tandem with it.</summary>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabsOverlay.Render(System.Boolean)">
+            <summary>
+            Renders the tabs and then calls <see cref="M:Win32Interop.Methods.User32.UpdateLayeredWindow(System.IntPtr,System.IntPtr,Win32Interop.Structs.POINT@,Win32Interop.Structs.SIZE@,System.IntPtr,Win32Interop.Structs.POINT@,System.UInt32,Win32Interop.Structs.BLENDFUNCTION@,Win32Interop.Enums.ULW)" /> to blend the tab content with the underlying window (
+            <see cref="F:EasyTabs.TitleBarTabsOverlay._parentForm" />).
+            </summary>
+            <param name="forceRedraw">Flag indicating whether a full render should be forced.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabsOverlay.Render(System.Drawing.Point,System.Boolean)">
+            <summary>
+            Renders the tabs and then calls <see cref="M:Win32Interop.Methods.User32.UpdateLayeredWindow(System.IntPtr,System.IntPtr,Win32Interop.Structs.POINT@,Win32Interop.Structs.SIZE@,System.IntPtr,Win32Interop.Structs.POINT@,System.UInt32,Win32Interop.Structs.BLENDFUNCTION@,Win32Interop.Enums.ULW)" /> to blend the tab content with the underlying window (
+            <see cref="F:EasyTabs.TitleBarTabsOverlay._parentForm" />).
+            </summary>
+            <param name="cursorPosition">Current position of the cursor.</param>
+            <param name="forceRedraw">Flag indicating whether a full render should be forced.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabsOverlay.GetRelativeCursorPosition(System.Drawing.Point)">
+            <summary>Gets the relative location of the cursor within the overlay.</summary>
+            <param name="cursorPosition">Cursor position that represents the absolute position of the cursor on the screen.</param>
+            <returns>The relative location of the cursor within the overlay.</returns>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabsOverlay.WndProc(System.Windows.Forms.Message@)">
+            <summary>Overrides the message pump for the window so that we can respond to click events on the tabs themselves.</summary>
+            <param name="m">Message received by the pump.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabsOverlay._parentForm_Activated(System.Object,System.EventArgs)">
+            <summary>Event handler that is called when <see cref="F:EasyTabs.TitleBarTabsOverlay._parentForm" />'s <see cref="E:System.Windows.Forms.Form.Activated" /> event is fired.</summary>
+            <param name="sender">Object from which this event originated.</param>
+            <param name="e">Arguments associated with the event.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabsOverlay._parentForm_Deactivate(System.Object,System.EventArgs)">
+            <summary>Event handler that is called when <see cref="F:EasyTabs.TitleBarTabsOverlay._parentForm" />'s <see cref="E:System.Windows.Forms.Form.Deactivate" /> event is fired.</summary>
+            <param name="sender">Object from which this event originated.</param>
+            <param name="e">Arguments associated with the event.</param>
+        </member>
+        <member name="M:EasyTabs.TitleBarTabsOverlay._parentForm_Disposed(System.Object,System.EventArgs)">
+            <summary>Event handler that is called when <see cref="F:EasyTabs.TitleBarTabsOverlay._parentForm" />'s <see cref="E:System.ComponentModel.Component.Disposed" /> event is fired.</summary>
+            <param name="sender">Object from which this event originated.</param>
+            <param name="e">Arguments associated with the event.</param>
+        </member>
+        <member name="T:EasyTabs.TitleBarTabsOverlay.MouseEvent">
+            <summary>
+            Contains information on mouse events captured by <see cref="M:EasyTabs.TitleBarTabsOverlay.MouseHookCallback(System.Int32,System.IntPtr,System.IntPtr)" /> and processed by
+            <see cref="M:EasyTabs.TitleBarTabsOverlay.InterpretMouseEvents" />.
+            </summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabsOverlay.MouseEvent.nCode">
+            <summary>Code for the event.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabsOverlay.MouseEvent.wParam">
+            <summary>wParam value associated with the event.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabsOverlay.MouseEvent.lParam">
+            <summary>lParam value associated with the event.</summary>
+        </member>
+        <member name="P:EasyTabs.TitleBarTabsOverlay.MouseEvent.MouseData">
+            <summary>Data associated with the mouse event.</summary>
+        </member>
+        <member name="T:EasyTabs.TornTabForm">
+            <summary>
+            Contains a semi-transparent window with a thumbnail of a tab that has been torn away from its parent window.  This thumbnail will follow the cursor
+            around as it's dragged around the screen.
+            </summary>
+        </member>
+        <member name="F:EasyTabs.TornTabForm._layeredWindow">
+            <summary>Window that contains the actual thumbnail image data.</summary>
+        </member>
+        <member name="F:EasyTabs.TornTabForm._cursorOffset">
+            <summary>Offset of the cursor within the torn tab representation while dragging.</summary>
+        </member>
+        <member name="F:EasyTabs.TornTabForm._hookId">
+            <summary>Pointer to the low-level mouse hook callback (<see cref="M:EasyTabs.TornTabForm.MouseHookCallback(System.Int32,System.IntPtr,System.IntPtr)" />).</summary>
+        </member>
+        <member name="F:EasyTabs.TornTabForm._hookInstalled">
+            <summary>Flag indicating whether <see cref="F:EasyTabs.TornTabForm._hookproc" /> is installed.</summary>
+        </member>
+        <member name="F:EasyTabs.TornTabForm._hookproc">
+            <summary>Delegate of <see cref="M:EasyTabs.TornTabForm.MouseHookCallback(System.Int32,System.IntPtr,System.IntPtr)" />; declared as a member variable to keep it from being garbage collected.</summary>
+        </member>
+        <member name="F:EasyTabs.TornTabForm._initialized">
+            <summary>Flag indicating whether or not the constructor has finished running.</summary>
+        </member>
+        <member name="F:EasyTabs.TornTabForm._tabThumbnail">
+            <summary>Thumbnail of the tab we are dragging.</summary>
+        </member>
+        <member name="M:EasyTabs.TornTabForm.#ctor(EasyTabs.TitleBarTab,EasyTabs.BaseTabRenderer)">
+            <summary>Constructor; initializes the window and constructs the tab thumbnail image to use when dragging.</summary>
+            <param name="tab">Tab that was torn out of its parent window.</param>
+            <param name="tabRenderer">Renderer instance to use when drawing the actual tab.</param>
+        </member>
+        <member name="M:EasyTabs.TornTabForm.TornTabForm_Disposed(System.Object,System.EventArgs)">
+            <summary>
+            Event handler that's called from <see cref="M:System.IDisposable.Dispose" />; calls <see cref="M:Win32Interop.Methods.User32.UnhookWindowsHookEx(System.IntPtr)" /> to unsubscribe from the mouse
+            hook.
+            </summary>
+            <param name="sender">Object from which this event originated.</param>
+            <param name="e">Arguments associated with this event.</param>
+        </member>
+        <member name="M:EasyTabs.TornTabForm.MouseHookCallback(System.Int32,System.IntPtr,System.IntPtr)">
+            <summary>Hook callback to process <see cref="F:Win32Interop.Enums.WM.WM_MOUSEMOVE" /> messages to move the thumbnail along with the cursor.</summary>
+            <param name="nCode">The message being received.</param>
+            <param name="wParam">Additional information about the message.</param>
+            <param name="lParam">Additional information about the message.</param>
+            <returns>A zero value if the procedure processes the message; a nonzero value if the procedure ignores the message.</returns>
+        </member>
+        <member name="M:EasyTabs.TornTabForm.SetWindowPosition(System.Drawing.Point)">
+            <summary>Updates the window position to keep up with the cursor's movement.</summary>
+            <param name="cursorPosition">Current position of the cursor.</param>
+        </member>
+        <member name="M:EasyTabs.TornTabForm.OnLoad(System.EventArgs)">
+            <summary>
+            Event handler that's called when the window is loaded; shows <see cref="F:EasyTabs.TornTabForm._layeredWindow" /> and installs the mouse hook via
+            <see cref="M:Win32Interop.Methods.User32.SetWindowsHookEx(Win32Interop.Enums.WH,Win32Interop.Methods.HOOKPROC,System.IntPtr,System.UInt32)" />.
+            </summary>
+            <param name="e">Arguments associated with this event.</param>
+        </member>
+        <member name="M:EasyTabs.TornTabForm.OnClosing(System.ComponentModel.CancelEventArgs)">
+            <summary>Event handler that is called when the window is closing; closes <see cref="F:EasyTabs.TornTabForm._layeredWindow" /> as well.</summary>
+            <param name="e">Arguments associated with this event.</param>
+        </member>
+        <member name="M:EasyTabs.TornTabForm.UpdateLayeredBackground">
+            <summary>
+            Calls <see cref="M:EasyTabs.LayeredWindow.UpdateWindow(System.Drawing.Bitmap,System.Byte,System.Int32,System.Int32,Win32Interop.Structs.POINT)" /> to update the position of the thumbnail and blend it properly with the underlying desktop
+            elements.
+            </summary>
+        </member>
+        <member name="T:EasyTabs.LayeredWindow">
+            <summary>Form that actually displays the thumbnail content for <see cref="T:EasyTabs.TornTabForm" />.</summary>
+        </member>
+        <member name="M:EasyTabs.LayeredWindow.#ctor">
+            <summary>Default constructor.</summary>
+        </member>
+        <member name="P:EasyTabs.LayeredWindow.CreateParams">
+            <summary>
+            Makes sure that the window is created with an <see cref="F:Win32Interop.Enums.WS_EX.WS_EX_LAYERED" /> flag set so that it can be alpha-blended properly with the desktop
+            contents underneath it.
+            </summary>
+        </member>
+        <member name="M:EasyTabs.LayeredWindow.UpdateWindow(System.Drawing.Bitmap,System.Byte,System.Int32,System.Int32,Win32Interop.Structs.POINT)">
+            <summary>
+            Renders the tab thumbnail (<paramref name="image" />) using the given dimensions and coordinates and blends it properly with the underlying desktop
+            elements.
+            </summary>
+            <param name="image">Thumbnail to display.</param>
+            <param name="opacity">Opacity that <paramref name="image" /> should be displayed with.</param>
+            <param name="width">Width of <paramref name="image" />.</param>
+            <param name="height">Height of <paramref name="image" />.</param>
+            <param name="position">Screen position that <paramref name="image" /> should be displayed at.</param>
+        </member>
+    </members>
+</doc>

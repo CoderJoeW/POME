@@ -1,0 +1,103 @@
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\obj\Debug\Multi-Window SSH Client.csprojAssemblyReference.cache
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\obj\Debug\Multi_Window_SSH_Client.Properties.Resources.resources
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\obj\Debug\Multi-Window SSH Client.csproj.GenerateResource.cache
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\obj\Debug\Multi-Window SSH Client.csproj.CoreCompileInputs.cache
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Multi-Window SSH Client.exe.config
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Multi-Window SSH Client.exe
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Multi-Window SSH Client.pdb
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\obj\Debug\Multi-Window SSH Client.exe
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\obj\Debug\Multi-Window SSH Client.pdb
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\dotnet-publish-ssh.exe
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Renci.SshNet.dll
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Renci.SshNet.xml
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\obj\Debug\Multi-Window SSH Client.csproj.CopyComplete
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\ConsoleControl.dll
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\ConsoleControlAPI.dll
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\ConsoleControl.xml
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\ConsoleControlAPI.xml
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\ComponentPro.Common.dll
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\ComponentPro.Network.dll
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\ComponentPro.Terminal.dll
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Granados.dll
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Poderosa.Core.dll
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Poderosa.Plugin.dll
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Poderosa.PortForwardingCommand.dll
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Poderosa.Protocols.dll
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Poderosa.TerminalControl.dll
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Poderosa.TerminalEmulator.dll
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Poderosa.TerminalSession.dll
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Poderosa.UI.dll
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\ComponentPro.Common.xml
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\ComponentPro.Network.xml
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\ComponentPro.Terminal.xml
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\obj\Debug\Multi_Window_SSH_Client.Main.resources
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\EasyTabs.dll
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Microsoft.WindowsAPICodePack.dll
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Win32Interop.Dwmapi.dll
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Win32Interop.Gdi32.dll
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Win32Interop.Kernel32.dll
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Win32Interop.User32.dll
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Win32Interop.Uxtheme.dll
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\EasyTabs.xml
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Win32Interop.Dwmapi.pdb
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Win32Interop.Gdi32.pdb
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Win32Interop.Gdi32.xml
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Win32Interop.Kernel32.pdb
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Win32Interop.User32.pdb
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Win32Interop.Uxtheme.pdb
+C:\Users\Dell\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\obj\Debug\Multi_Window_SSH_Client.AppContainer.resources
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\ComponentPro.Common.dll
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\ComponentPro.Network.dll
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\ComponentPro.Terminal.dll
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\ConsoleControl.dll
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\ConsoleControlAPI.dll
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\EasyTabs.dll
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Granados.dll
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Microsoft.WindowsAPICodePack.dll
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Poderosa.Core.dll
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Poderosa.Plugin.dll
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Poderosa.PortForwardingCommand.dll
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Poderosa.Protocols.dll
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Poderosa.TerminalControl.dll
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Poderosa.TerminalEmulator.dll
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Poderosa.TerminalSession.dll
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Poderosa.UI.dll
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Renci.SshNet.dll
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Win32Interop.Dwmapi.dll
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Win32Interop.Gdi32.dll
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Win32Interop.Kernel32.dll
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Win32Interop.User32.dll
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Win32Interop.Uxtheme.dll
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\ComponentPro.Common.xml
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\ComponentPro.Network.xml
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\ComponentPro.Terminal.xml
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\ConsoleControl.xml
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\ConsoleControlAPI.xml
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\EasyTabs.xml
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Renci.SshNet.xml
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Win32Interop.Dwmapi.pdb
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Win32Interop.Gdi32.pdb
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Win32Interop.Gdi32.xml
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Win32Interop.Kernel32.pdb
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Win32Interop.User32.pdb
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Win32Interop.Uxtheme.pdb
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\obj\Debug\Multi-Window SSH Client.csprojAssemblyReference.cache
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\obj\Debug\Multi_Window_SSH_Client.AppContainer.resources
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\obj\Debug\Multi_Window_SSH_Client.ConnectionForm.resources
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\obj\Debug\Multi_Window_SSH_Client.Main.resources
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\obj\Debug\Multi_Window_SSH_Client.Properties.Resources.resources
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\obj\Debug\Multi-Window SSH Client.csproj.GenerateResource.cache
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\obj\Debug\Multi-Window SSH Client.csproj.CopyComplete
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\WindowsBase.dll
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Multi-Window_SSH_Client.exe.config
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Multi-Window_SSH_Client.exe.manifest
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Multi-Window_SSH_Client.application
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Multi-Window_SSH_Client.exe
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\bin\Debug\Multi-Window_SSH_Client.pdb
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\obj\Debug\Multi-Window_SSH_Client.TrustInfo.xml
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\obj\Debug\Multi-Window_SSH_Client.exe.manifest
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\obj\Debug\Multi-Window_SSH_Client.application
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\obj\Debug\Multi-Window_SSH_Client.exe
+C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\obj\Debug\Multi-Window_SSH_Client.pdb
