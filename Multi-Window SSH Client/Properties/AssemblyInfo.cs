@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Multi-Window_SSH_Client")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("POME")]
+[assembly: AssemblyDescription("A chrome and putty inspired SSH Client")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Gambler Labs")]
-[assembly: AssemblyProduct("Multi-Window_SSH_Client")]
+[assembly: AssemblyProduct("POME")]
 [assembly: AssemblyCopyright("Copyright © Gambler Labs 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
