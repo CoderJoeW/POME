@@ -15,7 +15,7 @@ The list below is a list of planned features that will be implemented. Once impl
   - [ ] Command Line Support
 	- [X] User can open a session through use of command line without launching application
 	- [ ] If application is already open new tab is created for new session
-- [ ] Fully suite of commands
+- [ ] Full suite of commands
 	- [X] `CTRL+SHIFT+N` Commmand to duplicate session
 - [ ] GUI 
 	- [ ] Help Section
