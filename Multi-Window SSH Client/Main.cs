@@ -50,10 +50,15 @@ namespace Multi_Window_SSH_Client {
                 password = passwordInfo.Text;
             }
 
-            sshTerminalControl1.Connect(host, port);
-            sshTerminalControl1.Authenticate(username, password);
-            panel1.Visible = false;
-            sshTerminalControl1.Focus();
+            try {
+                sshTerminalControl1.Connect(host, port);
+                sshTerminalControl1.Authenticate(username, password);
+                panel1.Visible = false;
+                sshTerminalControl1.Focus();
+            }catch(Exception e) {
+                Console.WriteLine("\n\n An SSH execepton has occureed:{0}", e.Message);
+                sshTerminalControl1.Disconnect();
+            }
         }
 
         private void button1_Click(object sender, EventArgs e) {
