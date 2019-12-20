@@ -33,5 +33,5 @@ The list below is a list of planned features that will be implemented. Once impl
 - [ ] Console Control
 	- [ ] Full Color Support
 	- [ ] Full Syntax Highlighting Support
-- [ ] Other
+- [X] Other
 	- [X] Allow use of numberpad inside of nano and other editors
