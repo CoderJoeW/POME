@@ -1,6 +1,6 @@
 # Welcome to the home of POME
 
-![Codacity Badge](https://api.codacy.com/project/badge/Grade/11e6b04aa465481c840811d6705be9bf?isInternal=true)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/11e6b04aa465481c840811d6705be9bf)](https://www.codacy.com/manual/j.williamson/Multi_Window_SSH_Client?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=flaminggenius/Multi_Window_SSH_Client&amp;utm_campaign=Badge_Grade)
 
 **POME** is a SSH Client. When I explain what **POME** is I tell people "Imagine if *Putty* and *Chrome* had a kid, **POME** is that kid". While as of writing this **POME** does not have all the bells or whistles of *Putty* nor *Chrome* **POME** is functional and reliably and is well on its way to being your new go to option!
 
