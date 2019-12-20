@@ -19,6 +19,7 @@ The list below is a list of planned features that will be implemented. Once impl
 	- [X] `CTRL+SHIFT+N` Commmand to duplicate session
 - [ ] GUI 
 	- [ ] Help Section
+	- [ ] Set tab name to be hostname
 - [X] SSH
 	- [X] Can connect to remote SSH Server
 	- [X] Can connect to remote SSH Server through GUI
