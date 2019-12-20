@@ -36,5 +36,9 @@ The list below is a list of planned features that will be implemented. Once impl
 - [ ] Console Control
 	- [ ] Full Color Support
 	- [ ] Full Syntax Highlighting Support
+- [ ] Error Handling
+	- [ ] Graceful handling of wrong username/password
+	- [ ] Graceful handling of invalid host
+	- [ ] Graceful handling of other errors
 - [X] Other
 	- [X] Allow use of numberpad inside of nano and other editors
