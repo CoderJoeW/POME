@@ -14,8 +14,6 @@ namespace Multi_Window_SSH_Client {
         [STAThread]
         static void Main(string[] args) {
             Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //AppContainer container = new AppContainer();
 
             if(args.Length > 0) {
                 container.Tabs.Add(
