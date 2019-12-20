@@ -23,16 +23,17 @@ namespace Multi_Window_SSH_Client {
             }
         }
 
-        public Main(string args = null) {
+        public Main(string args) {
             InitializeComponent();
+            host = args.Split('|')[0];
+            port = int.Parse(args.Split('|')[1]);
+            username = args.Split('|')[2];
+            password = args.Split('|')[3];
+            ConnectToSSH();
+        }
 
-            if(args != null) {
-                host = args.Split('|')[0];
-                port = int.Parse(args.Split('|')[1]);
-                username = args.Split('|')[2];
-                password = args.Split('|')[3];
-                ConnectToSSH();
-            }
+        public Main() {
+            InitializeComponent();
         }
 
         private void Main_Load(object sender, EventArgs e) {
