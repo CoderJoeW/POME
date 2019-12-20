@@ -148,6 +148,12 @@
     <Compile Include="AppContainer.Designer.cs">
       <DependentUpon>AppContainer.cs</DependentUpon>
     </Compile>
+    <Compile Include="ErrorWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ErrorWindow.Designer.cs">
+      <DependentUpon>ErrorWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="InputManager.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
@@ -162,6 +168,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AppContainer.resx">
       <DependentUpon>AppContainer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ErrorWindow.resx">
+      <DependentUpon>ErrorWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
