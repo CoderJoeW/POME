@@ -7,7 +7,7 @@ using EasyTabs;
 
 namespace Multi_Window_SSH_Client {
     static class Program {
-        public static AppContainer container = new AppContainer();
+        public readonly static AppContainer container = new AppContainer();
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
