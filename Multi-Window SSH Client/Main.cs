@@ -56,7 +56,9 @@ namespace Multi_Window_SSH_Client {
                 panel1.Visible = false;
                 sshTerminalControl1.Focus();
             }catch(Exception e) {
+                #if DEBUG
                 Console.WriteLine("\n\n An SSH execepton has occureed:{0}", e.Message);
+                #endif
                 sshTerminalControl1.Disconnect();
             }
         }
