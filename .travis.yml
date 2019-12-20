@@ -1,3 +1,0 @@
-sudo: required
-language: csharp
-solution: "Multi-Window SSH Client.sln"
