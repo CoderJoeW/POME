@@ -15,10 +15,11 @@ The list below is a list of planned features that will be implemented. Once impl
   - [ ] Command Line Support
 	- [X] User can open a session through use of command line without launching application
 	- [ ] If application is already open new tab is created for new session
-- [ ] Fully suite of commands
+- [ ] Full suite of commands
 	- [X] `CTRL+SHIFT+N` Commmand to duplicate session
 - [ ] GUI 
 	- [ ] Help Section
+	- [ ] Set tab name to be hostname
 - [X] SSH
 	- [X] Can connect to remote SSH Server
 	- [X] Can connect to remote SSH Server through GUI
@@ -30,3 +31,8 @@ The list below is a list of planned features that will be implemented. Once impl
 	- [ ] Wiki Contributions
 	- [ ] README Contributions Guide
 	- [ ] README Small Usage examples
+- [ ] Console Control
+	- [ ] Full Color Support
+	- [ ] Full Syntax Highlighting Support
+- [X] Other
+	- [X] Allow use of numberpad inside of nano and other editors
