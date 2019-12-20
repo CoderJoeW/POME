@@ -1,0 +1,7 @@
+sudo: required
+language: csharp
+solution: "Multi-Window SSH Client.sln"
+install:
+  - sudo apt-get install mono-devel
+script:
+  - msbuild CI.proj
