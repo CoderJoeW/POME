@@ -54,7 +54,6 @@ C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Clien
 C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi-Window SSH Client\obj\Release\Multi-Window_SSH_Client.pdb
 C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi_Window_SSH_Client\Multi-Window SSH Client\obj\Release\Multi-Window SSH Client.csprojAssemblyReference.cache
 C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi_Window_SSH_Client\Multi-Window SSH Client\obj\Release\Multi_Window_SSH_Client.AppContainer.resources
-C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi_Window_SSH_Client\Multi-Window SSH Client\obj\Release\Multi_Window_SSH_Client.ConnectionForm.resources
 C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi_Window_SSH_Client\Multi-Window SSH Client\obj\Release\Multi_Window_SSH_Client.Main.resources
 C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi_Window_SSH_Client\Multi-Window SSH Client\obj\Release\Multi_Window_SSH_Client.Properties.Resources.resources
 C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi_Window_SSH_Client\Multi-Window SSH Client\obj\Release\Multi-Window SSH Client.csproj.GenerateResource.cache
