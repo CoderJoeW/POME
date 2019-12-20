@@ -145,7 +145,6 @@ C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi_Window_SSH_Clien
 C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi_Window_SSH_Client\Multi-Window SSH Client\bin\Debug\Win32Interop.Uxtheme.pdb
 C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi_Window_SSH_Client\Multi-Window SSH Client\obj\Debug\Multi-Window SSH Client.csprojAssemblyReference.cache
 C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi_Window_SSH_Client\Multi-Window SSH Client\obj\Debug\Multi_Window_SSH_Client.AppContainer.resources
-C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi_Window_SSH_Client\Multi-Window SSH Client\obj\Debug\Multi_Window_SSH_Client.ConnectionForm.resources
 C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi_Window_SSH_Client\Multi-Window SSH Client\obj\Debug\Multi_Window_SSH_Client.Main.resources
 C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi_Window_SSH_Client\Multi-Window SSH Client\obj\Debug\Multi_Window_SSH_Client.Properties.Resources.resources
 C:\Users\sales2-2019\source\repos\Multi-Window SSH Client\Multi_Window_SSH_Client\Multi-Window SSH Client\obj\Debug\Multi-Window SSH Client.csproj.GenerateResource.cache

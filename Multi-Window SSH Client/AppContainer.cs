@@ -20,7 +20,7 @@ namespace Multi_Window_SSH_Client {
         }
 
         private void AppContainer_Load(object sender, EventArgs e) {
-
+            //Causes error if not present in compiler
         }
 
         public override TitleBarTab CreateTab() {
