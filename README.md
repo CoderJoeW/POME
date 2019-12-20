@@ -30,3 +30,6 @@ The list below is a list of planned features that will be implemented. Once impl
 	- [ ] Wiki Contributions
 	- [ ] README Contributions Guide
 	- [ ] README Small Usage examples
+- [ ] Console Control
+	- [ ] Full Color Support
+	- [ ] Full Syntax Highlighting Support
