@@ -12,7 +12,7 @@ You may also get the latest release from [https://software.gambler-labs.com](htt
 
 ## PFP (Plans For POME)
 The list below is a list of planned features that will be implemented. Once implemented will eventually be removed from the list as new things are added. ***This is not a list of current featues.***
-- [ ]  Command Line Support
+  - [ ] Command Line Support
 	- [X] User can open a session through use of command line without launching application
 	- [ ] If application is already open new tab is created for new session
 - [ ] Fully suite of commands
