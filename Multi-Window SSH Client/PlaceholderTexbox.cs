@@ -20,8 +20,17 @@ namespace Multi_Window_SSH_Client {
         }
 
         public new string Text {
-            get => isPlaceHolder ? string.Empty : base.Text;
-            set => base.Text = value;
+            get {
+                if (isPlaceHolder) {
+                    return string.Empty;
+                }
+                else {
+                    return base.Text;
+                }
+            }
+            set {
+                base.Text = value;
+            }
         }
 
         //when the control loses focus, the placeholder is shown
