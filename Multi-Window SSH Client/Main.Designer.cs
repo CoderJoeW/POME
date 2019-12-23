@@ -66,6 +66,7 @@
 			this.portInfo.Name = "portInfo";
 			this.portInfo.Size = new System.Drawing.Size(100, 20);
 			this.portInfo.TabIndex = 8;
+			this.portInfo.Text = "22";
 			// 
 			// passwordInfo
 			// 
@@ -73,6 +74,7 @@
 			this.passwordInfo.Name = "passwordInfo";
 			this.passwordInfo.Size = new System.Drawing.Size(100, 20);
 			this.passwordInfo.TabIndex = 7;
+			this.passwordInfo.Text = "Password";
 			// 
 			// usernameInfo
 			// 
@@ -80,6 +82,7 @@
 			this.usernameInfo.Name = "usernameInfo";
 			this.usernameInfo.Size = new System.Drawing.Size(100, 20);
 			this.usernameInfo.TabIndex = 6;
+			this.usernameInfo.Text = "Username";
 			// 
 			// hostInfo
 			// 
@@ -87,6 +90,7 @@
 			this.hostInfo.Name = "hostInfo";
 			this.hostInfo.Size = new System.Drawing.Size(100, 20);
 			this.hostInfo.TabIndex = 5;
+			this.hostInfo.Text = "Host";
 			// 
 			// button1
 			// 

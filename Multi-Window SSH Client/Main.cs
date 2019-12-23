@@ -40,6 +40,7 @@ namespace Multi_Window_SSH_Client {
             hostInfo.Focus();
             sshTerminalControl1.AllowCopyingToClipboard = true;
             sshTerminalControl1.AllowPastingFromClipboard = true;
+            RegisterPlaceholderTextboxEvents();
         }
 
         /*
@@ -105,10 +106,49 @@ namespace Multi_Window_SSH_Client {
                 DuplicateSession();
             }
         }
+
+        private void RegisterPlaceholderTextboxEvents() {
+            hostInfo.GotFocus += PlaceholderRemoveText;
+            hostInfo.LostFocus += PlaceholderAddText;
+
+            usernameInfo.GotFocus += PlaceholderRemoveText;
+            usernameInfo.LostFocus += PlaceholderAddText;
+
+            passwordInfo.GotFocus += PlaceholderRemoveText;
+            passwordInfo.LostFocus += PlaceholderAddText;
+
+            portInfo.GotFocus += PlaceholderRemoveText;
+            portInfo.LostFocus += PlaceholderAddText;
+        }
         #endregion
 
         #region Public
+        public void PlaceholderRemoveText(object sender, EventArgs e) {
+            TextBox tx = sender as TextBox;
+            if(tx.Text != "") {
+                tx.Text = "";
+            }
+        }
 
+        public void PlaceholderAddText(object sender,EventArgs e) {
+            TextBox tx = sender as TextBox;
+            if (string.IsNullOrWhiteSpace(tx.Text)) {
+                switch (tx.Name) {
+                    case "hostInfo":
+                        tx.Text = "Host";
+                        break;
+                    case "usernameInfo":
+                        tx.Text = "Username";
+                        break;
+                    case "passwordInfo":
+                        tx.Text = "Password";
+                        break;
+                    case "portInfo":
+                        tx.Text = "Port";
+                        break;
+                }
+            }
+        }
         #endregion
 
         /*
