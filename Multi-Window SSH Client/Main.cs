@@ -17,7 +17,7 @@ namespace POME {
         private string username = "";
         private string password = "";
 
-        private ErrorWindow error_window = new ErrorWindow();
+        private readonly ErrorWindow error_window = new ErrorWindow();
 
         protected TitleBarTabs ParentTabs {
             get {
