@@ -65,9 +65,9 @@ namespace Multi_Window_SSH_Client {
                 this.Text = host;
             }
             catch (Exception e) {
-#if DEBUG
+                #if DEBUG
                 Console.WriteLine("\n\n An SSH execepton has occureed:{0}", e.Message);
-#endif
+                #endif
                 sshTerminalControl1.Disconnect();
             }
         }
