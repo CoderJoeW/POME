@@ -1,6 +1,6 @@
 # Welcome to the home of POME
 
-[![Build status](https://ci.appveyor.com/api/projects/status/bhkvlsoa47udn90d/branch/master?svg=true)](https://ci.appveyor.com/project/flaminggenius/pome/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/bhkvlsoa47udn90d/branch/v2-dev?svg=true)](https://ci.appveyor.com/project/flaminggenius/pome/branch/v2-dev)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/11e6b04aa465481c840811d6705be9bf)](https://www.codacy.com/manual/j.williamson/Multi_Window_SSH_Client?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=flaminggenius/Multi_Window_SSH_Client&amp;utm_campaign=Badge_Grade)
 ![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)
 
