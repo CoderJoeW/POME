@@ -146,6 +146,9 @@ namespace Multi_Window_SSH_Client {
                     case "portInfo":
                         tx.Text = "Port";
                         break;
+                    default:
+                        tx.Text = "";
+                        break;
                 }
             }
         }
