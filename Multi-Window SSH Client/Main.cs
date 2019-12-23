@@ -42,6 +42,13 @@ namespace POME {
             InitializeComponent();
         }
 
+        /*
+     --------------------------------
+             BEGIN LISTENERS
+     --------------------------------
+     */
+
+        #region Private
         private void Main_Load(object sender, EventArgs e) {
             System.Threading.ThreadStart thread_start = new System.Threading.ThreadStart(RecieveData);
             System.Threading.Thread thread = new System.Threading.Thread(thread_start);
@@ -57,6 +64,85 @@ namespace POME {
             this.shell_stream.Close();
             this.ssh_client.Disconnect();
         }
+
+        private void button1_Click(object sender, EventArgs e) {
+            ConnectToSSH();
+        }
+
+        private void form_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e) {
+            if (e.KeyCode == Keys.Enter) {
+                ConnectToSSH();
+            }
+        }
+
+        private void commandInput_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e) {
+            try {
+                if (e.KeyCode == Keys.Enter) {
+                    this.shell_stream.Write(commandInput.Text + ";\r\n");
+                    this.shell_stream.Flush();
+                }
+            }
+            catch (Exception exc) {
+                throw exc;
+            }
+        }
+
+        private void ShowExtraFunctionsMenu(object sender, System.Windows.Forms.KeyEventArgs e) {
+            if (InputManager.CheckControlDown() && InputManager.CheckShiftDown() && Keyboard.IsKeyDown(Key.N)) {
+                DuplicateSession();
+            }
+        }
+
+        private void RegisterPlaceholderTextboxEvents() {
+            hostInfo.GotFocus += PlaceholderRemoveText;
+            hostInfo.LostFocus += PlaceholderAddText;
+
+            usernameInfo.GotFocus += PlaceholderRemoveText;
+            usernameInfo.LostFocus += PlaceholderAddText;
+
+            passwordInfo.GotFocus += PlaceholderRemoveText;
+            passwordInfo.LostFocus += PlaceholderAddText;
+
+            portInfo.GotFocus += PlaceholderRemoveText;
+            portInfo.LostFocus += PlaceholderAddText;
+        }
+        #endregion
+
+        #region Public
+        public void PlaceholderRemoveText(object sender, EventArgs e) {
+            TextBox tx = sender as TextBox;
+            tx.Text = "";
+        }
+
+        public void PlaceholderAddText(object sender, EventArgs e) {
+            TextBox tx = sender as TextBox;
+            if (string.IsNullOrWhiteSpace(tx.Text)) {
+                switch (tx.Name) {
+                    case "hostInfo":
+                        tx.Text = "Host";
+                        break;
+                    case "usernameInfo":
+                        tx.Text = "Username";
+                        break;
+                    case "passwordInfo":
+                        tx.Text = "Password";
+                        break;
+                    case "portInfo":
+                        tx.Text = "Port";
+                        break;
+                    default:
+                        tx.Text = "";
+                        break;
+                }
+            }
+        }
+        #endregion
+
+        /*
+        --------------------------------
+                END LISTENERS
+        --------------------------------
+        */
 
         /*
         --------------------------------
@@ -125,92 +211,6 @@ namespace POME {
         /*
         --------------------------------
                 END METHODS
-        --------------------------------
-        */
-
-        /*
-        --------------------------------
-                BEGIN LISTENERS
-        --------------------------------
-        */
-
-        #region Private
-        private void button1_Click(object sender, EventArgs e) {
-            ConnectToSSH();
-        }
-
-        private void form_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e) {
-            if (e.KeyCode == Keys.Enter) {
-                ConnectToSSH();
-            }
-        }
-
-        private void commandInput_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e) {
-            try {
-                if (e.KeyCode == Keys.Enter) {
-                    this.shell_stream.Write(commandInput.Text + ";\r\n");
-                    this.shell_stream.Flush();
-                }
-            }
-            catch (Exception exc) {
-                throw exc;
-            }
-        }
-
-        private void ShowExtraFunctionsMenu(object sender, System.Windows.Forms.KeyEventArgs e) {
-            if (InputManager.CheckControlDown() && InputManager.CheckShiftDown() && Keyboard.IsKeyDown(Key.N)) {
-                DuplicateSession();
-            }
-        }
-
-        private void RegisterPlaceholderTextboxEvents() {
-            hostInfo.GotFocus += PlaceholderRemoveText;
-            hostInfo.LostFocus += PlaceholderAddText;
-
-            usernameInfo.GotFocus += PlaceholderRemoveText;
-            usernameInfo.LostFocus += PlaceholderAddText;
-
-            passwordInfo.GotFocus += PlaceholderRemoveText;
-            passwordInfo.LostFocus += PlaceholderAddText;
-
-            portInfo.GotFocus += PlaceholderRemoveText;
-            portInfo.LostFocus += PlaceholderAddText;
-        }
-        #endregion
-
-        #region Public
-        public void PlaceholderRemoveText(object sender, EventArgs e) {
-            TextBox tx = sender as TextBox;
-            tx.Text = "";
-        }
-
-        public void PlaceholderAddText(object sender,EventArgs e) {
-            TextBox tx = sender as TextBox;
-            if (string.IsNullOrWhiteSpace(tx.Text)) {
-                switch (tx.Name) {
-                    case "hostInfo":
-                        tx.Text = "Host";
-                        break;
-                    case "usernameInfo":
-                        tx.Text = "Username";
-                        break;
-                    case "passwordInfo":
-                        tx.Text = "Password";
-                        break;
-                    case "portInfo":
-                        tx.Text = "Port";
-                        break;
-                    default:
-                        tx.Text = "";
-                        break;
-                }
-            }
-        }
-        #endregion
-
-        /*
-        --------------------------------
-                END LISTENERS
         --------------------------------
         */
 
