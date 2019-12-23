@@ -17,6 +17,8 @@ namespace POME {
         private string username = "";
         private string password = "";
 
+        private ErrorWindow error_window = new ErrorWindow();
+
         protected TitleBarTabs ParentTabs {
             get {
                 return (ParentForm as TitleBarTabs);
@@ -66,11 +68,14 @@ namespace POME {
                 this.Text = host;
             }
             catch (Exception e) {
-                #if DEBUG
-                Console.WriteLine("\n\n An SSH execepton has occureed:{0}", e.Message);
-                #endif
-                sshTerminalControl1.Disconnect();
+                DisplayError(e.Message);
+                //sshTerminalControl1.Disconnect();
             }
+        }
+
+        private void DisplayError(string msg) {
+            error_window.SetErrorMessage(msg);
+            error_window.Show();
         }
         #endregion
 
