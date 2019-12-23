@@ -64,6 +64,11 @@ namespace Multi_Window_SSH_Client {
             }
         }
 
+        /*
+        --------------------------------
+                BEGIN LISTENERS
+        --------------------------------
+        */
         private void button1_Click(object sender, EventArgs e) {
             ConnectToSSH();
         }
@@ -75,11 +80,21 @@ namespace Multi_Window_SSH_Client {
         }
 
         private void ShowExtraFunctionsMenu(object sender, System.Windows.Forms.KeyEventArgs e) {
-            if(InputManager.CheckControlDown() && InputManager.CheckShiftDown() && Keyboard.IsKeyDown(Key.N)) {
+            if (InputManager.CheckControlDown() && InputManager.CheckShiftDown() && Keyboard.IsKeyDown(Key.N)) {
                 DuplicateSession();
             }
         }
+        /*
+        --------------------------------
+                END LISTENERS
+        --------------------------------
+        */
 
+        /*
+        --------------------------------
+                BEGIN COMMANDS
+        --------------------------------
+        */
         private void DuplicateSession() {
             string args = host + "|" + port + "|" + username + "|" + password;
             Main newMain = new Main(args);
@@ -89,5 +104,11 @@ namespace Multi_Window_SSH_Client {
             });
             Program.container.SelectedTabIndex += 1;
         }
+
+        /*
+        --------------------------------
+                END COMMANDS
+        --------------------------------
+        */
     }
 }
