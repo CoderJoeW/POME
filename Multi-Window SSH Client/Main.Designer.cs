@@ -26,11 +26,11 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
 			this.sshTerminalControl1 = new ComponentPro.Net.Terminal.SshTerminalControl();
 			this.panel1 = new System.Windows.Forms.Panel();
-			this.passwordInfo = new Multi_Window_SSH_Client.PlaceHolderTextBox();
-			this.usernameInfo = new Multi_Window_SSH_Client.PlaceHolderTextBox();
-			this.hostInfo = new Multi_Window_SSH_Client.PlaceHolderTextBox();
-			this.button1 = new System.Windows.Forms.Button();
 			this.portInfo = new System.Windows.Forms.TextBox();
+			this.passwordInfo = new System.Windows.Forms.TextBox();
+			this.usernameInfo = new System.Windows.Forms.TextBox();
+			this.hostInfo = new System.Windows.Forms.TextBox();
+			this.button1 = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -60,60 +60,43 @@
 			this.panel1.Size = new System.Drawing.Size(700, 56);
 			this.panel1.TabIndex = 2;
 			// 
+			// portInfo
+			// 
+			this.portInfo.Location = new System.Drawing.Point(3, 33);
+			this.portInfo.Name = "portInfo";
+			this.portInfo.Size = new System.Drawing.Size(100, 20);
+			this.portInfo.TabIndex = 8;
+			// 
 			// passwordInfo
 			// 
-			this.passwordInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic);
-			this.passwordInfo.ForeColor = System.Drawing.Color.Gray;
-			this.passwordInfo.Location = new System.Drawing.Point(224, 12);
+			this.passwordInfo.Location = new System.Drawing.Point(215, 7);
 			this.passwordInfo.Name = "passwordInfo";
-			this.passwordInfo.PlaceHolderText = "Password";
 			this.passwordInfo.Size = new System.Drawing.Size(100, 20);
-			this.passwordInfo.TabIndex = 8;
-			this.passwordInfo.Text = "Password";
-			this.passwordInfo.UseSystemPasswordChar = true;
-			this.passwordInfo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.form_KeyDown);
+			this.passwordInfo.TabIndex = 7;
 			// 
 			// usernameInfo
 			// 
-			this.usernameInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic);
-			this.usernameInfo.ForeColor = System.Drawing.Color.Gray;
-			this.usernameInfo.Location = new System.Drawing.Point(118, 12);
+			this.usernameInfo.Location = new System.Drawing.Point(109, 7);
 			this.usernameInfo.Name = "usernameInfo";
-			this.usernameInfo.PlaceHolderText = "Username";
 			this.usernameInfo.Size = new System.Drawing.Size(100, 20);
-			this.usernameInfo.TabIndex = 7;
-			this.usernameInfo.Text = "Username";
-			this.usernameInfo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.form_KeyDown);
+			this.usernameInfo.TabIndex = 6;
 			// 
 			// hostInfo
 			// 
-			this.hostInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic);
-			this.hostInfo.ForeColor = System.Drawing.Color.Gray;
-			this.hostInfo.Location = new System.Drawing.Point(12, 12);
+			this.hostInfo.Location = new System.Drawing.Point(3, 7);
 			this.hostInfo.Name = "hostInfo";
-			this.hostInfo.PlaceHolderText = "Host";
 			this.hostInfo.Size = new System.Drawing.Size(100, 20);
 			this.hostInfo.TabIndex = 5;
-			this.hostInfo.Text = "Host";
-			this.hostInfo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.form_KeyDown);
 			// 
 			// button1
 			// 
-			this.button1.Location = new System.Drawing.Point(330, 12);
+			this.button1.Location = new System.Drawing.Point(321, 6);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(149, 20);
 			this.button1.TabIndex = 4;
 			this.button1.Text = "Connect";
 			this.button1.UseVisualStyleBackColor = true;
 			this.button1.Click += new System.EventHandler(this.button1_Click);
-			// 
-			// portInfo
-			// 
-			this.portInfo.Location = new System.Drawing.Point(12, 33);
-			this.portInfo.Name = "portInfo";
-			this.portInfo.Size = new System.Drawing.Size(100, 20);
-			this.portInfo.TabIndex = 9;
-			this.portInfo.Text = "22";
 			// 
 			// Main
 			// 
@@ -138,9 +121,9 @@
         private ComponentPro.Net.Terminal.SshTerminalControl sshTerminalControl1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button1;
-        private PlaceHolderTextBox hostInfo;
-        private PlaceHolderTextBox passwordInfo;
-        private PlaceHolderTextBox usernameInfo;
-        private System.Windows.Forms.TextBox portInfo;
-    }
+		private System.Windows.Forms.TextBox portInfo;
+		private System.Windows.Forms.TextBox passwordInfo;
+		private System.Windows.Forms.TextBox usernameInfo;
+		private System.Windows.Forms.TextBox hostInfo;
+	}
 }
