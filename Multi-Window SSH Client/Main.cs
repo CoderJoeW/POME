@@ -130,9 +130,7 @@ namespace POME {
         #region Public
         public void PlaceholderRemoveText(object sender, EventArgs e) {
             TextBox tx = sender as TextBox;
-            if(tx.Text != "") {
-                tx.Text = "";
-            }
+            tx.Text = "";
         }
 
         public void PlaceholderAddText(object sender,EventArgs e) {
