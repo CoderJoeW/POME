@@ -24,7 +24,6 @@
         /// </summary>
         private void InitializeComponent() {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
-			this.sshTerminalControl1 = new ComponentPro.Net.Terminal.SshTerminalControl();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.portInfo = new System.Windows.Forms.TextBox();
 			this.passwordInfo = new System.Windows.Forms.TextBox();
@@ -33,19 +32,6 @@
 			this.button1 = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// sshTerminalControl1
-			// 
-			this.sshTerminalControl1.BackColor = System.Drawing.Color.Magenta;
-			this.sshTerminalControl1.Cursor = System.Windows.Forms.Cursors.IBeam;
-			this.sshTerminalControl1.CursorMouse = System.Windows.Forms.Cursors.Arrow;
-			this.sshTerminalControl1.CursorText = System.Windows.Forms.Cursors.IBeam;
-			this.sshTerminalControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.sshTerminalControl1.Location = new System.Drawing.Point(0, 0);
-			this.sshTerminalControl1.Name = "sshTerminalControl1";
-			this.sshTerminalControl1.Size = new System.Drawing.Size(700, 468);
-			this.sshTerminalControl1.TabIndex = 1;
-			this.sshTerminalControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ShowExtraFunctionsMenu);
 			// 
 			// panel1
 			// 
@@ -108,7 +94,6 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(700, 468);
 			this.Controls.Add(this.panel1);
-			this.Controls.Add(this.sshTerminalControl1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
 			this.Name = "Main";
@@ -122,7 +107,6 @@
         }
 
         #endregion
-        private ComponentPro.Net.Terminal.SshTerminalControl sshTerminalControl1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.TextBox portInfo;

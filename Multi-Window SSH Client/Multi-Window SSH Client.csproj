@@ -92,15 +92,6 @@
   <PropertyGroup />
   <PropertyGroup />
   <ItemGroup>
-    <Reference Include="ComponentPro.Common, Version=7.1.40.233, Culture=neutral, PublicKeyToken=0efede2d78b28dff, processorArchitecture=MSIL">
-      <HintPath>..\packages\ComponentPro.Common.7.1.233\lib\net40\ComponentPro.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="ComponentPro.Network, Version=7.1.40.233, Culture=neutral, PublicKeyToken=0efede2d78b28dff, processorArchitecture=MSIL">
-      <HintPath>..\packages\ComponentPro.Network.7.1.233\lib\net40\ComponentPro.Network.dll</HintPath>
-    </Reference>
-    <Reference Include="ComponentPro.Terminal, Version=7.1.40.233, Culture=neutral, PublicKeyToken=0efede2d78b28dff, processorArchitecture=MSIL">
-      <HintPath>..\packages\ComponentPro.Terminal.7.1.233\lib\net40\ComponentPro.Terminal.dll</HintPath>
-    </Reference>
     <Reference Include="EasyTabs, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EasyTabs.1.3.3.0\lib\net40\EasyTabs.dll</HintPath>
     </Reference>

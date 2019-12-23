@@ -40,8 +40,8 @@ namespace POME {
 
         private void Main_Load(object sender, EventArgs e) {
             hostInfo.Focus();
-            sshTerminalControl1.AllowCopyingToClipboard = true;
-            sshTerminalControl1.AllowPastingFromClipboard = true;
+            //sshTerminalControl1.AllowCopyingToClipboard = true;
+            //sshTerminalControl1.AllowPastingFromClipboard = true;
             RegisterPlaceholderTextboxEvents();
         }
 
@@ -61,10 +61,10 @@ namespace POME {
             }
 
             try {
-                sshTerminalControl1.Connect(host, port);
-                sshTerminalControl1.Authenticate(username, password);
+                //sshTerminalControl1.Connect(host, port);
+                //sshTerminalControl1.Authenticate(username, password);
                 panel1.Visible = false;
-                sshTerminalControl1.Focus();
+                //sshTerminalControl1.Focus();
                 this.Text = host;
             }
             catch (Exception e) {
