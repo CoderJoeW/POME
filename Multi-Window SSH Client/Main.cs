@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 using EasyTabs;
+using Renci.SshNet;
 
 namespace POME {
     public partial class Main : Form { 
@@ -16,6 +17,9 @@ namespace POME {
         private int port = 0;
         private string username = "";
         private string password = "";
+
+        private SshClient ssh_client = null;
+        private ShellStream shell_stream = null;
 
         private readonly ErrorWindow error_window = new ErrorWindow();
 
@@ -39,10 +43,19 @@ namespace POME {
         }
 
         private void Main_Load(object sender, EventArgs e) {
+            System.Threading.ThreadStart thread_start = new System.Threading.ThreadStart(RecieveData);
+            System.Threading.Thread thread = new System.Threading.Thread(thread_start);
+
+            thread.IsBackground = true;
+            thread.Start();
+
             hostInfo.Focus();
-            //sshTerminalControl1.AllowCopyingToClipboard = true;
-            //sshTerminalControl1.AllowPastingFromClipboard = true;
             RegisterPlaceholderTextboxEvents();
+        }
+
+        private void Main_FormClosing(object sender, FormClosingEventArgs e) {
+            this.shell_stream.Close();
+            this.ssh_client.Disconnect();
         }
 
         /*
@@ -61,21 +74,47 @@ namespace POME {
             }
 
             try {
-                //sshTerminalControl1.Connect(host, port);
-                //sshTerminalControl1.Authenticate(username, password);
+                this.ssh_client = new SshClient(host,port, username, password);
+                this.ssh_client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(120);
+                this.ssh_client.Connect();
+
+                this.shell_stream = this.ssh_client.CreateShellStream("newTerminal", 80, 60, 800, 600, 65536);
+
                 panel1.Visible = false;
-                //sshTerminalControl1.Focus();
                 this.Text = host;
             }
             catch (Exception e) {
                 DisplayError(e.Message);
-                //sshTerminalControl1.Disconnect();
             }
         }
 
         private void DisplayError(string msg) {
             error_window.SetErrorMessage(msg);
             error_window.Show();
+        }
+
+        private void RecieveData() {
+            while (true) {
+                try {
+                    if (this.shell_stream != null && this.shell_stream.DataAvailable) {
+                        string data = this.shell_stream.Read();
+                        AppendTextboxInThread(sshConsole, data);
+                    }
+                }catch(Exception e) {
+                    throw e;
+                }
+
+                System.Threading.Thread.Sleep(200);
+            }
+        }
+
+        private void AppendTextboxInThread(TextBox t, String s) {
+            if (t.InvokeRequired) {
+                t.Invoke(new Action<TextBox, string>(AppendTextboxInThread), new object[] { t, s });
+            }
+            else {
+                t.AppendText(s);
+            }
         }
         #endregion
 
@@ -103,6 +142,18 @@ namespace POME {
         private void form_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter) {
                 ConnectToSSH();
+            }
+        }
+
+        private void commandInput_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e) {
+            try {
+                if (e.KeyCode == Keys.Enter) {
+                    this.shell_stream.Write(commandInput.Text + ";\r\n");
+                    this.shell_stream.Flush();
+                }
+            }
+            catch (Exception exc) {
+                throw exc;
             }
         }
 

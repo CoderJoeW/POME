@@ -30,11 +30,15 @@
 			this.usernameInfo = new System.Windows.Forms.TextBox();
 			this.hostInfo = new System.Windows.Forms.TextBox();
 			this.button1 = new System.Windows.Forms.Button();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.sshConsole = new System.Windows.Forms.TextBox();
+			this.commandInput = new System.Windows.Forms.TextBox();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// panel1
 			// 
+			this.panel1.Controls.Add(this.groupBox1);
 			this.panel1.Controls.Add(this.portInfo);
 			this.panel1.Controls.Add(this.passwordInfo);
 			this.panel1.Controls.Add(this.usernameInfo);
@@ -88,21 +92,50 @@
 			this.button1.UseVisualStyleBackColor = true;
 			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
+			// groupBox1
+			// 
+			this.groupBox1.Location = new System.Drawing.Point(0, 59);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(700, 410);
+			this.groupBox1.TabIndex = 3;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "groupBox1";
+			// 
+			// sshConsole
+			// 
+			this.sshConsole.Location = new System.Drawing.Point(3, 59);
+			this.sshConsole.Multiline = true;
+			this.sshConsole.Name = "sshConsole";
+			this.sshConsole.Size = new System.Drawing.Size(691, 378);
+			this.sshConsole.TabIndex = 3;
+			// 
+			// commandInput
+			// 
+			this.commandInput.Location = new System.Drawing.Point(3, 443);
+			this.commandInput.Name = "commandInput";
+			this.commandInput.Size = new System.Drawing.Size(691, 20);
+			this.commandInput.TabIndex = 4;
+			this.commandInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.commandInput_KeyDown);
+			// 
 			// Main
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(700, 468);
+			this.Controls.Add(this.commandInput);
+			this.Controls.Add(this.sshConsole);
 			this.Controls.Add(this.panel1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
 			this.Name = "Main";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Main";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
 			this.Load += new System.EventHandler(this.Main_Load);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
         }
 
@@ -113,5 +146,8 @@
 		private System.Windows.Forms.TextBox passwordInfo;
 		private System.Windows.Forms.TextBox usernameInfo;
 		private System.Windows.Forms.TextBox hostInfo;
+		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.TextBox sshConsole;
+		private System.Windows.Forms.TextBox commandInput;
 	}
 }
