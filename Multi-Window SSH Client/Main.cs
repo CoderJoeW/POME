@@ -42,8 +42,15 @@ namespace Multi_Window_SSH_Client {
             sshTerminalControl1.AllowPastingFromClipboard = true;
         }
 
+        /*
+        --------------------------------
+                BEGIN METHODS
+        --------------------------------
+        */
+
+        #region Private
         private void ConnectToSSH() {
-            if(host == "") {
+            if (host == "") {
                 host = hostInfo.Text;
                 port = int.Parse(portInfo.Text);
                 username = usernameInfo.Text;
@@ -56,13 +63,25 @@ namespace Multi_Window_SSH_Client {
                 panel1.Visible = false;
                 sshTerminalControl1.Focus();
                 this.Text = host;
-            }catch(Exception e) {
-                #if DEBUG
+            }
+            catch (Exception e) {
+#if DEBUG
                 Console.WriteLine("\n\n An SSH execepton has occureed:{0}", e.Message);
-                #endif
+#endif
                 sshTerminalControl1.Disconnect();
             }
         }
+        #endregion
+
+        #region Public
+
+        #endregion
+
+        /*
+        --------------------------------
+                END METHODS
+        --------------------------------
+        */
 
         /*
         --------------------------------
@@ -103,6 +122,8 @@ namespace Multi_Window_SSH_Client {
                 BEGIN COMMANDS
         --------------------------------
         */
+
+        #region Private
         private void DuplicateSession() {
             string args = host + "|" + port + "|" + username + "|" + password;
             Main newMain = new Main(args);
@@ -112,6 +133,11 @@ namespace Multi_Window_SSH_Client {
             });
             Program.container.SelectedTabIndex += 1;
         }
+        #endregion
+
+        #region Public
+
+        #endregion
 
         /*
         --------------------------------
