@@ -185,6 +185,10 @@ namespace POME {
                     if (this.shell_stream != null && this.shell_stream.DataAvailable) {
                         string data = this.shell_stream.Read();
                         AppendTextboxInThread(sshConsole, data);
+                        AppendTextboxInThread(tmpOutput, sshConsole.Lines[1]);
+                        /*foreach(string line in sshConsole.Lines) {
+                            AppendTextboxInThread(tmpOutput, line + "|||||||||||||||||||NEWLINE|||||||||||||||");
+                        }*/
                     }
                 }catch(Exception e) {
                     throw e;

@@ -33,6 +33,7 @@
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.sshConsole = new System.Windows.Forms.TextBox();
 			this.commandInput = new System.Windows.Forms.TextBox();
+			this.tmpOutput = new System.Windows.Forms.TextBox();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -47,7 +48,7 @@
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panel1.Location = new System.Drawing.Point(0, 0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(700, 56);
+			this.panel1.Size = new System.Drawing.Size(1205, 56);
 			this.panel1.TabIndex = 2;
 			// 
 			// portInfo
@@ -117,11 +118,20 @@
 			this.commandInput.TabIndex = 4;
 			this.commandInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.commandInput_KeyDown);
 			// 
+			// tmpOutput
+			// 
+			this.tmpOutput.Location = new System.Drawing.Point(700, 59);
+			this.tmpOutput.Multiline = true;
+			this.tmpOutput.Name = "tmpOutput";
+			this.tmpOutput.Size = new System.Drawing.Size(493, 378);
+			this.tmpOutput.TabIndex = 5;
+			// 
 			// Main
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(700, 468);
+			this.ClientSize = new System.Drawing.Size(1205, 468);
+			this.Controls.Add(this.tmpOutput);
 			this.Controls.Add(this.commandInput);
 			this.Controls.Add(this.sshConsole);
 			this.Controls.Add(this.panel1);
@@ -149,5 +159,6 @@
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.TextBox sshConsole;
 		private System.Windows.Forms.TextBox commandInput;
+		private System.Windows.Forms.TextBox tmpOutput;
 	}
 }
