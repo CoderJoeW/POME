@@ -1,4 +1,4 @@
-﻿namespace Multi_Window_SSH_Client {
+﻿namespace POME {
     partial class Main {
         /// <summary>
         /// Required designer variable.

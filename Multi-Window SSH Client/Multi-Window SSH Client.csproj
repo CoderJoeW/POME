@@ -60,7 +60,7 @@
     <ApplicationIcon>ssh-image.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Multi_Window_SSH_Client.Program</StartupObject>
+    <StartupObject>POME.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>3BD7507B1C84570CF7090F2DBDBE3A463DBF6579</ManifestCertificateThumbprint>
@@ -161,9 +161,6 @@
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="PlaceHolderTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AppContainer.resx">
@@ -174,9 +171,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PlaceHolderTextBox.resx">
-      <DependentUpon>PlaceHolderTextBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

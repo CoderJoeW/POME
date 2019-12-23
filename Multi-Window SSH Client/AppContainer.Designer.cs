@@ -1,6 +1,6 @@
 ﻿
 
-namespace Multi_Window_SSH_Client {
+namespace POME {
     partial class AppContainer {
         /// <summary>
         /// Required designer variable.

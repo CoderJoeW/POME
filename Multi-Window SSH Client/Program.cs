@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using EasyTabs;
 
-namespace Multi_Window_SSH_Client {
+namespace POME {
     static class Program {
         public readonly static AppContainer container = new AppContainer();
         /// <summary>

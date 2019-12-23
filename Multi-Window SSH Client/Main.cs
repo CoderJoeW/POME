@@ -10,12 +10,12 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using EasyTabs;
 
-namespace Multi_Window_SSH_Client {
+namespace POME {
     public partial class Main : Form { 
-        string host = "";
-        int port = 0;
-        string username = "";
-        string password = "";
+        private string host = "";
+        private int port = 0;
+        private string username = "";
+        private string password = "";
 
         protected TitleBarTabs ParentTabs {
             get {

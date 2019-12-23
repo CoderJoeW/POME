@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 using EasyTabs;
 
-namespace Multi_Window_SSH_Client {
+namespace POME {
     public partial class AppContainer : TitleBarTabs {
         public AppContainer() {
             InitializeComponent();
