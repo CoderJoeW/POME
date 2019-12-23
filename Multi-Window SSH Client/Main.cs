@@ -69,6 +69,8 @@ namespace Multi_Window_SSH_Client {
                 BEGIN LISTENERS
         --------------------------------
         */
+
+        #region Private
         private void button1_Click(object sender, EventArgs e) {
             ConnectToSSH();
         }
@@ -84,6 +86,12 @@ namespace Multi_Window_SSH_Client {
                 DuplicateSession();
             }
         }
+        #endregion
+
+        #region Public
+
+        #endregion
+
         /*
         --------------------------------
                 END LISTENERS
