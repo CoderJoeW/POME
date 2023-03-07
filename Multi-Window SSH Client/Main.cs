@@ -39,7 +39,7 @@ namespace POME {
         }
 
         private void Main_Load(object sender, EventArgs e) {
-            hostInfo.Focus();
+            txtHost.Focus();
             sshTerminalControl1.AllowCopyingToClipboard = true;
             sshTerminalControl1.AllowPastingFromClipboard = true;
             RegisterPlaceholderTextboxEvents();
@@ -54,16 +54,16 @@ namespace POME {
         #region Private
         private void ConnectToSSH() {
             if (host == "") {
-                host = hostInfo.Text;
-                port = int.Parse(portInfo.Text);
-                username = usernameInfo.Text;
-                password = passwordInfo.Text;
+                host = txtHost.Text;
+                port = int.Parse(txtPort.Text);
+                username = txtUsername.Text;
+                password = txtPassword.Text;
             }
 
             try {
                 sshTerminalControl1.Connect(host, port);
                 sshTerminalControl1.Authenticate(username, password);
-                panel1.Visible = false;
+                tblConnectionInfo.Visible = false;
                 sshTerminalControl1.Focus();
                 this.Text = host;
             }
@@ -113,17 +113,17 @@ namespace POME {
         }
 
         private void RegisterPlaceholderTextboxEvents() {
-            hostInfo.GotFocus += PlaceholderRemoveText;
-            hostInfo.LostFocus += PlaceholderAddText;
+            txtHost.GotFocus += PlaceholderRemoveText;
+            txtHost.LostFocus += PlaceholderAddText;
 
-            usernameInfo.GotFocus += PlaceholderRemoveText;
-            usernameInfo.LostFocus += PlaceholderAddText;
+            txtUsername.GotFocus += PlaceholderRemoveText;
+            txtUsername.LostFocus += PlaceholderAddText;
 
-            passwordInfo.GotFocus += PlaceholderRemoveText;
-            passwordInfo.LostFocus += PlaceholderAddText;
+            txtPassword.GotFocus += PlaceholderRemoveText;
+            txtPassword.LostFocus += PlaceholderAddText;
 
-            portInfo.GotFocus += PlaceholderRemoveText;
-            portInfo.LostFocus += PlaceholderAddText;
+            txtPort.GotFocus += PlaceholderRemoveText;
+            txtPort.LostFocus += PlaceholderAddText;
         }
         #endregion
 
