@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Web.UI.WebControls.WebParts;
 using System.Windows.Forms;
 using EasyTabs;
+using ComponentPro.Net.Terminal;
 
 namespace POME
 {
