@@ -39,10 +39,23 @@ namespace POME {
         }
 
         private void Main_Load(object sender, EventArgs e) {
-            txtHost.Focus();
+            using(var form = new SessionDetails())
+            {
+                var result = form.ShowDialog();
+
+                if(result == DialogResult.OK)
+                {
+                    host = form.Host;
+                    port = form.Port;
+                    username = form.Username;
+                    password = form.Password;
+
+                    ConnectToSSH();
+                }
+            }
+
             sshTerminalControl1.AllowCopyingToClipboard = true;
             sshTerminalControl1.AllowPastingFromClipboard = true;
-            RegisterPlaceholderTextboxEvents();
         }
 
         /*
@@ -53,17 +66,9 @@ namespace POME {
 
         #region Private
         private void ConnectToSSH() {
-            if (host == "") {
-                host = txtHost.Text;
-                port = int.Parse(txtPort.Text);
-                username = txtUsername.Text;
-                password = txtPassword.Text;
-            }
-
             try {
                 sshTerminalControl1.Connect(host, port);
                 sshTerminalControl1.Authenticate(username, password);
-                tblConnectionInfo.Visible = false;
                 sshTerminalControl1.Focus();
                 this.Text = host;
             }
@@ -112,19 +117,6 @@ namespace POME {
             }
         }
 
-        private void RegisterPlaceholderTextboxEvents() {
-            txtHost.GotFocus += PlaceholderRemoveText;
-            txtHost.LostFocus += PlaceholderAddText;
-
-            txtUsername.GotFocus += PlaceholderRemoveText;
-            txtUsername.LostFocus += PlaceholderAddText;
-
-            txtPassword.GotFocus += PlaceholderRemoveText;
-            txtPassword.LostFocus += PlaceholderAddText;
-
-            txtPort.GotFocus += PlaceholderRemoveText;
-            txtPort.LostFocus += PlaceholderAddText;
-        }
         #endregion
 
         #region Public
