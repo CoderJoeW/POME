@@ -32,7 +32,6 @@
             this.sshTerminalControl1.Name = "sshTerminalControl1";
             this.sshTerminalControl1.Size = new System.Drawing.Size(1050, 720);
             this.sshTerminalControl1.TabIndex = 0;
-            this.sshTerminalControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ShowExtraFunctionsMenu);
             // 
             // Main
             // 
