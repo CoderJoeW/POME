@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Windows.Input;
 using EasyTabs;
 
 namespace POME
 {
     public partial class Main : Form
     {
-        private string host = "";
-        private int port = 0;
-        private string username = "";
-        private string password = "";
+        private string host;
+        private int port;
+        private string username;
+        private string password;
         private readonly ErrorWindow error_window = new ErrorWindow();
 
-        protected TitleBarTabs ParentTabs => (ParentForm as TitleBarTabs);
+        protected TitleBarTabs ParentTabs => ParentForm as TitleBarTabs;
 
-        public Main(string args = "")
+        public Main()
         {
             InitializeComponent();
-            if (!string.IsNullOrEmpty(args)) SetSessionDetails(args);
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -37,7 +35,10 @@ namespace POME
                 sshTerminalControl1.Focus();
                 Text = host;
             }
-            catch (Exception e) { DisplayError(e.Message); }
+            catch (Exception e)
+            {
+                DisplayError(e.Message);
+            }
         }
 
         private void DisplayError(string msg)
@@ -46,21 +47,12 @@ namespace POME
             error_window.Show();
         }
 
-        private void SetSessionDetails(SessionDetails form)
+        private void SetSessionDetails(string[] sessionDetails)
         {
-            host = form.Host;
-            port = form.Port;
-            username = form.Username;
-            password = form.Password;
-            ConnectToSSH();
-        }
-
-        private void SetSessionDetails(string args)
-        {
-            host = args.Split('|')[0];
-            port = int.Parse(args.Split('|')[1]);
-            username = args.Split('|')[2];
-            password = args.Split('|')[3];
+            host = sessionDetails[0];
+            port = int.Parse(sessionDetails[1]);
+            username = sessionDetails[2];
+            password = sessionDetails[3];
             ConnectToSSH();
         }
 
@@ -68,16 +60,12 @@ namespace POME
         {
             using (var form = new SessionDetails())
             {
-                if (form.ShowDialog() == DialogResult.OK) SetSessionDetails(form);
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    string[] sessionDetails = { form.Host, form.Port.ToString(), form.Username, form.Password };
+                    SetSessionDetails(sessionDetails);
+                }
             }
-        }
-
-        private void DuplicateSession()
-        {
-            string args = $"{host}|{port}|{username}|{password}";
-            Main newMain = new Main(args);
-            Program.container.Tabs.Add(new TitleBarTab(Program.container) { Content = newMain });
-            Program.container.SelectedTabIndex += 1;
         }
     }
 }

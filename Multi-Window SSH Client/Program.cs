@@ -15,24 +15,15 @@ namespace POME {
         static void Main(string[] args) {
             Application.EnableVisualStyles();
 
-            if(args.Length > 0) {
-                container.Tabs.Add(
-                    new TitleBarTab(container) {
-                        Content = new Main(args[0]) {
-                            Text = "SSH Instance"
-                        }
+            container.Tabs.Add(
+                new TitleBarTab(container)
+                {
+                    Content = new Main
+                    {
+                        Text = "SSH Instance"
                     }
-                );
-            }
-            else {
-                container.Tabs.Add(
-                    new TitleBarTab(container) {
-                        Content = new Main {
-                            Text = "SSH Instance"
-                        }
-                    }
-                );
-            }
+                }
+            );
 
             // Set initial tab the first one
             container.SelectedTabIndex = 0;
