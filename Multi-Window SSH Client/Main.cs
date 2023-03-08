@@ -18,16 +18,12 @@ namespace POME
         public Main(string args = "")
         {
             InitializeComponent();
-            if (!string.IsNullOrEmpty(args)) SetArgs(args);
+            if (!string.IsNullOrEmpty(args)) SetSessionDetails(args);
         }
 
         private void Main_Load(object sender, EventArgs e)
         {
-            using (var form = new SessionDetails())
-            {
-                if (form.ShowDialog() == DialogResult.OK) SetSessionDetails(form);
-            }
-
+            ShowSessionDetailsDialog();
             sshTerminalControl1.AllowCopyingToClipboard = true;
             sshTerminalControl1.AllowPastingFromClipboard = true;
         }
@@ -50,15 +46,6 @@ namespace POME
             error_window.Show();
         }
 
-        private void SetArgs(string args)
-        {
-            host = args.Split('|')[0];
-            port = int.Parse(args.Split('|')[1]);
-            username = args.Split('|')[2];
-            password = args.Split('|')[3];
-            ConnectToSSH();
-        }
-
         private void SetSessionDetails(SessionDetails form)
         {
             host = form.Host;
@@ -68,43 +55,20 @@ namespace POME
             ConnectToSSH();
         }
 
-        private void button1_Click(object sender, EventArgs e) => ConnectToSSH();
-
-        private void form_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        private void SetSessionDetails(string args)
         {
-            if (e.KeyCode == Keys.Enter) ConnectToSSH();
+            host = args.Split('|')[0];
+            port = int.Parse(args.Split('|')[1]);
+            username = args.Split('|')[2];
+            password = args.Split('|')[3];
+            ConnectToSSH();
         }
 
-        private void ShowExtraFunctionsMenu(object sender, System.Windows.Forms.KeyEventArgs e)
+        private void ShowSessionDetailsDialog()
         {
-            if (InputManager.CheckControlDown() && InputManager.CheckShiftDown() && Keyboard.IsKeyDown(Key.N)) DuplicateSession();
-        }
-
-        private void PlaceholderRemoveText(object sender, EventArgs e) => (sender as TextBox).Text = "";
-
-        private void PlaceholderAddText(object sender, EventArgs e)
-        {
-            TextBox tx = sender as TextBox;
-            if (string.IsNullOrWhiteSpace(tx.Text))
+            using (var form = new SessionDetails())
             {
-                switch (tx.Name)
-                {
-                    case "hostInfo":
-                        tx.Text = "Host";
-                        break;
-                    case "usernameInfo":
-                        tx.Text = "Username";
-                        break;
-                    case "passwordInfo":
-                        tx.Text = "Password";
-                        break;
-                    case "portInfo":
-                        tx.Text = "Port";
-                        break;
-                    default:
-                        tx.Text = "";
-                        break;
-                }
+                if (form.ShowDialog() == DialogResult.OK) SetSessionDetails(form);
             }
         }
 
