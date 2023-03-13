@@ -178,7 +178,6 @@
     <Compile Include="ErrorWindow.Designer.cs">
       <DependentUpon>ErrorWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="InputManager.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
