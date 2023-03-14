@@ -1,61 +1,64 @@
 ﻿using System;
-using System.Web.UI.WebControls.WebParts;
+using System.Drawing;
+using System.Text;
 using System.Windows.Forms;
-using EasyTabs;
-using ComponentPro.Net.Terminal;
+using Renci.SshNet;
+using Renci.SshNet.Common;
 
 namespace POME
 {
     public partial class Main : Form
     {
-        private string host;
-        private int port;
-        private string username;
-        private string password;
-        private readonly ErrorWindow error_window = new ErrorWindow();
-
-        protected TitleBarTabs ParentTabs => ParentForm as TitleBarTabs;
-
+        private SshClient _sshClient;
+        private ShellStream _shellStream;
+        private TerminalEmulatorControl _terminalEmulatorControl;
         public Main()
         {
             InitializeComponent();
+
+            CheckForIllegalCrossThreadCalls = false;
+
+            // Create and configure a custom TerminalEmulatorControl
+            _terminalEmulatorControl = new TerminalEmulatorControl
+            {
+                Dock = DockStyle.Fill,
+                Font = new Font("Consolas", 10)
+            };
+            Controls.Add(_terminalEmulatorControl);
+
+            // Subscribe to CommandEntered event
+            _terminalEmulatorControl.CommandEntered += _terminalEmulatorControl_CommandEntered;
         }
 
         private void Main_Load(object sender, EventArgs e)
         {
             ShowSessionDetailsDialog();
-            sshTerminalControl1.AllowCopyingToClipboard = true;
-            sshTerminalControl1.AllowPastingFromClipboard = true;
         }
 
-        private void ConnectToSSH()
+        private void ShellStream_DataReceived(object sender, ShellDataEventArgs e)
         {
-            try
+            if (InvokeRequired)
             {
-                sshTerminalControl1.Connect(host, port);
-                sshTerminalControl1.Authenticate(username, password);
-                sshTerminalControl1.Focus();
-                Text = host;
+                Invoke(new Action(() => _terminalEmulatorControl.AppendText(_shellStream.Read())));
             }
-            catch (Exception e)
+            else
             {
-                DisplayError(e.Message);
+                _terminalEmulatorControl.AppendText(_shellStream.Read());
             }
         }
 
-        private void DisplayError(string msg)
+        private void _terminalEmulatorControl_CommandEntered(object sender, string command)
         {
-            error_window.SetErrorMessage(msg);
-            error_window.Show();
+            if (_shellStream != null && _shellStream.CanWrite)
+            {
+                _shellStream.WriteLine(command);
+                _terminalEmulatorControl.ClearInput();
+            }
         }
 
-        private void SetSessionDetails(string[] sessionDetails)
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            host = sessionDetails[0];
-            port = int.Parse(sessionDetails[1]);
-            username = sessionDetails[2];
-            password = sessionDetails[3];
-            ConnectToSSH();
+            _sshClient?.Dispose();
         }
 
         private void ShowSessionDetailsDialog()
@@ -64,8 +67,19 @@ namespace POME
             {
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    string[] sessionDetails = { form.Host, form.Port.ToString(), form.Username, form.Password };
-                    SetSessionDetails(sessionDetails);
+                    var connectionInfo = new ConnectionInfo(form.Host, form.Port, form.Username, new PasswordAuthenticationMethod(form.Username, form.Password));
+
+                    _sshClient = new SshClient(connectionInfo);
+                    _sshClient.Connect();
+
+                    int columns = _terminalEmulatorControl.ClientSize.Width / _terminalEmulatorControl.CharWidth;
+                    int rows = _terminalEmulatorControl.ClientSize.Height / _terminalEmulatorControl.CharHeight;
+
+                    _shellStream = _sshClient.CreateShellStream("xterm", (uint)columns, (uint)rows, 800, 600, 1024);
+                    _shellStream.DataReceived += ShellStream_DataReceived;
+
+                    // Set focus to the TerminalEmulatorControl so it can accept keyboard input
+                    _terminalEmulatorControl.Focus();
                 }
             }
         }

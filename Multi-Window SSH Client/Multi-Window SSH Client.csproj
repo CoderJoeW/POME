@@ -93,15 +93,6 @@
   <PropertyGroup />
   <PropertyGroup />
   <ItemGroup>
-    <Reference Include="ComponentPro.Common, Version=7.1.40.233, Culture=neutral, PublicKeyToken=0efede2d78b28dff, processorArchitecture=MSIL">
-      <HintPath>..\packages\ComponentPro.Common.7.1.233\lib\net40\ComponentPro.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="ComponentPro.Network, Version=7.1.40.233, Culture=neutral, PublicKeyToken=0efede2d78b28dff, processorArchitecture=MSIL">
-      <HintPath>..\packages\ComponentPro.Network.7.1.233\lib\net40\ComponentPro.Network.dll</HintPath>
-    </Reference>
-    <Reference Include="ComponentPro.Terminal, Version=7.1.40.233, Culture=neutral, PublicKeyToken=0efede2d78b28dff, processorArchitecture=MSIL">
-      <HintPath>..\packages\ComponentPro.Terminal.7.1.233\lib\net40\ComponentPro.Terminal.dll</HintPath>
-    </Reference>
     <Reference Include="EasyTabs, Version=2.0.0.39, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EasyTabs.2.0.0\lib\net40\EasyTabs.dll</HintPath>
     </Reference>
@@ -118,6 +109,9 @@
       <HintPath>..\packages\EasyTabs.2.0.0\lib\net40\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="Renci.SshNet, Version=2020.0.2.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
+      <HintPath>..\packages\SSH.NET.2020.0.2\lib\net40\Renci.SshNet.dll</HintPath>
+    </Reference>
     <Reference Include="Svg, Version=3.4.0.0, Culture=neutral, PublicKeyToken=12a0bac221edeae2, processorArchitecture=MSIL">
       <HintPath>..\packages\Svg.3.4.4\lib\net462\Svg.dll</HintPath>
     </Reference>
@@ -191,6 +185,9 @@
     </Compile>
     <Compile Include="SessionDetails.Designer.cs">
       <DependentUpon>SessionDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TerminalEmulatorControl.cs">
+      <SubType>Component</SubType>
     </Compile>
     <EmbeddedResource Include="AppContainer.resx">
       <DependentUpon>AppContainer.cs</DependentUpon>

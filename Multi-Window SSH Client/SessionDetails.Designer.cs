@@ -113,8 +113,9 @@ namespace POME
             this.txtHost.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.txtHost.Location = new System.Drawing.Point(242, 23);
             this.txtHost.Name = "txtHost";
-            this.txtHost.Size = new System.Drawing.Size(507, 35);
+            this.txtHost.Size = new System.Drawing.Size(507, 26);
             this.txtHost.TabIndex = 4;
+            this.txtHost.Text = "127.0.0.1";
             // 
             // txtUsername
             // 
@@ -122,8 +123,9 @@ namespace POME
             this.txtUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.txtUsername.Location = new System.Drawing.Point(242, 110);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(507, 35);
+            this.txtUsername.Size = new System.Drawing.Size(507, 26);
             this.txtUsername.TabIndex = 5;
+            this.txtUsername.Text = "root";
             // 
             // txtPassword
             // 
@@ -131,8 +133,9 @@ namespace POME
             this.txtPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.txtPassword.Location = new System.Drawing.Point(242, 197);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(507, 35);
+            this.txtPassword.Size = new System.Drawing.Size(507, 26);
             this.txtPassword.TabIndex = 6;
+            this.txtPassword.Text = "l00k0u1";
             // 
             // txtPort
             // 
@@ -140,8 +143,9 @@ namespace POME
             this.txtPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.txtPort.Location = new System.Drawing.Point(242, 284);
             this.txtPort.Name = "txtPort";
-            this.txtPort.Size = new System.Drawing.Size(507, 35);
+            this.txtPort.Size = new System.Drawing.Size(507, 26);
             this.txtPort.TabIndex = 7;
+            this.txtPort.Text = "22";
             // 
             // btnSubmitSessionDetails
             // 
