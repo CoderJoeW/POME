@@ -12,6 +12,7 @@ namespace POME
         private SshClient _sshClient;
         private ShellStream _shellStream;
         private TerminalEmulatorControl _terminalEmulatorControl;
+
         public Main()
         {
             InitializeComponent();
@@ -22,7 +23,11 @@ namespace POME
             _terminalEmulatorControl = new TerminalEmulatorControl
             {
                 Dock = DockStyle.Fill,
-                Font = new Font("Consolas", 10)
+                Font = new Font("Consolas", 10),
+                Prompt = "> ",
+                PromptColor = Color.Green,
+                InputColor = Color.White,
+                OutputColor = Color.Gray
             };
             Controls.Add(_terminalEmulatorControl);
 
@@ -39,11 +44,11 @@ namespace POME
         {
             if (InvokeRequired)
             {
-                Invoke(new Action(() => _terminalEmulatorControl.AppendText(_shellStream.Read())));
+                Invoke(new Action(() => _terminalEmulatorControl.AppendText(Encoding.ASCII.GetString(e.Data), _terminalEmulatorControl.OutputColor)));
             }
             else
             {
-                _terminalEmulatorControl.AppendText(_shellStream.Read());
+                _terminalEmulatorControl.AppendText(Encoding.ASCII.GetString(e.Data), _terminalEmulatorControl.OutputColor);
             }
         }
 
