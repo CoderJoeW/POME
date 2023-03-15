@@ -85,6 +85,29 @@ public class EscapeSequenceHandler
 
         switch (command)
         {
+            case 'A': // Cursor up
+                value = parameters.Length > 0 && int.TryParse(parameters[0], out parsedParam) ? parsedParam : 1;
+                CursorUp(richTextBox, value);
+                break;
+            case 'B': // Cursor down
+                value = parameters.Length > 0 && int.TryParse(parameters[0], out parsedParam) ? parsedParam : 1;
+                CursorDown(richTextBox, value);
+                break;
+            case 'C': // Cursor forward (right)
+                value = parameters.Length > 0 && int.TryParse(parameters[0], out parsedParam) ? parsedParam : 1;
+                CursorForward(richTextBox, value);
+                break;
+            case 'D': // Cursor backward (left)
+                value = parameters.Length > 0 && int.TryParse(parameters[0], out parsedParam) ? parsedParam : 1;
+                CursorBackward(richTextBox, value);
+                break;
+            case 'H': // Cursor position (row and column)
+            case 'f':
+                if (parameters.Length == 2 && int.TryParse(parameters[0], out parsedParam) && int.TryParse(parameters[1], out int parsedParam2))
+                {
+                    SetCursorPosition(richTextBox, parsedParam - 1, parsedParam2 - 1);
+                }
+                break;
             case 'S': // Scroll up
                 value = parameters.Length > 0 && int.TryParse(parameters[0], out parsedParam) ? parsedParam : 1;
                 ScrollUp(richTextBox, value);
@@ -137,6 +160,43 @@ public class EscapeSequenceHandler
             default:
                 // Handle other XTerm escape sequences or ignore unknown ones
                 break;
+        }
+    }
+
+    private static void CursorUp(RichTextBox richTextBox, int lines)
+    {
+        int currentLine = richTextBox.GetLineFromCharIndex(richTextBox.SelectionStart);
+        richTextBox.SelectionStart = richTextBox.GetFirstCharIndexFromLine(Math.Max(currentLine - lines, 0));
+        richTextBox.ScrollToCaret();
+    }
+
+    private static void CursorDown(RichTextBox richTextBox, int lines)
+    {
+        int currentLine = richTextBox.GetLineFromCharIndex(richTextBox.SelectionStart);
+        richTextBox.SelectionStart = richTextBox.GetFirstCharIndexFromLine(Math.Min(currentLine + lines, richTextBox.Lines.Length - 1));
+        richTextBox.ScrollToCaret();
+    }
+
+    private static void CursorForward(RichTextBox richTextBox, int columns)
+    {
+        richTextBox.SelectionStart = Math.Min(richTextBox.SelectionStart + columns, richTextBox.Text.Length);
+        richTextBox.ScrollToCaret();
+    }
+
+    private static void CursorBackward(RichTextBox richTextBox, int columns)
+    {
+        richTextBox.SelectionStart = Math.Max(richTextBox.SelectionStart - columns, 0);
+        richTextBox.ScrollToCaret();
+    }
+
+    private static void SetCursorPosition(RichTextBox richTextBox, int row, int col)
+    {
+        if (row >= 0 && row < richTextBox.Lines.Length)
+        {
+            int lineStart = richTextBox.GetFirstCharIndexFromLine(row);
+            int lineLength = richTextBox.Lines[row].Length;
+            richTextBox.SelectionStart = lineStart + Math.Min(col, lineLength);
+            richTextBox.ScrollToCaret();
         }
     }
 
