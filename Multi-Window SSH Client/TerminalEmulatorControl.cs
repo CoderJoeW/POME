@@ -120,18 +120,7 @@ public class TerminalEmulatorControl : RichTextBox
 
     protected virtual void OnCommandEntered(string command)
     {
-        if (command.Trim().ToLower() == "clear")
-        {
-            ClearOutput();
-        }
-        else if (command == "CTRL+C")
-        {
-            InterruptRequested?.Invoke(this, EventArgs.Empty);
-        }
-        else
-        {
-            CommandEntered?.Invoke(this, command);
-        }
+        CommandEntered?.Invoke(this, command);
     }
 
     public void ClearOutput()

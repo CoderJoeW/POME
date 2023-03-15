@@ -154,6 +154,14 @@ public class EscapeSequenceHandler
                     }
                 }
                 break;
+            case 'J': // Erase in Display (ED)
+                value = parameters.Length > 0 && int.TryParse(parameters[0], out parsedParam) ? parsedParam : 0;
+                EraseInDisplay(richTextBox, value);
+                break;
+            case '@': // Insert blank characters
+                value = parameters.Length > 0 && int.TryParse(parameters[0], out parsedParam) ? parsedParam : 1;
+                InsertBlankCharacters(richTextBox, value);
+                break;
 
             // Add and update cases for additional XTerm escape sequences
 
@@ -229,31 +237,46 @@ public class EscapeSequenceHandler
         richTextBox.ScrollToCaret();
     }
 
-    private static void EraseInLine(RichTextBox richTextBox, int mode)
+    private static void EraseInDisplay(RichTextBox richTextBox, int mode)
+    {
+        int start, length;
+        switch (mode)
+        {
+            case 0: // Erase from cursor to end of display
+                start = richTextBox.SelectionStart;
+                length = richTextBox.Text.Length - start;
+                break;
+            case 1: // Erase from start of display to cursor
+                start = 0;
+                length = richTextBox.SelectionStart;
+                break;
+            case 2: // Erase entire display
+                start = 0;
+                length = richTextBox.Text.Length;
+                break;
+            default:
+                return;
+        }
+
+        richTextBox.SelectionStart = start;
+        richTextBox.SelectionLength = length;
+        richTextBox.SelectedText = new string(' ', length);
+        richTextBox.SelectionLength = 0;
+    }
+
+    private static void InsertBlankCharacters(RichTextBox richTextBox, int count)
     {
         int currentLine = richTextBox.GetLineFromCharIndex(richTextBox.SelectionStart);
         int lineStart = richTextBox.GetFirstCharIndexFromLine(currentLine);
         int lineLength = richTextBox.Lines[currentLine].Length;
-        richTextBox.SelectionLength = 0;
-        switch (mode)
-        {
-            case 0: // Erase from cursor to end of line
-                richTextBox.SelectionLength = lineStart + lineLength - richTextBox.SelectionStart;
-                richTextBox.SelectedText = new string(' ', richTextBox.SelectionLength);
-                break;
-            case 1: // Erase from beginning of line to cursor
-                int cursorPos = richTextBox.SelectionStart;
-                richTextBox.SelectionStart = lineStart;
-                richTextBox.SelectionLength = cursorPos - lineStart;
-                richTextBox.SelectedText = new string(' ', richTextBox.SelectionLength);
-                break;
-            case 2: // Erase entire line
-                richTextBox.SelectionStart = lineStart;
-                richTextBox.SelectionLength = lineLength;
-                richTextBox.SelectedText = new string(' ', lineLength);
-                break;
-        }
+        int currentColumn = richTextBox.SelectionStart - lineStart;
 
+        // Determine the number of spaces to insert
+        int spacesToInsert = Math.Min(count, lineLength - currentColumn);
+
+        // Insert spaces at the cursor position
+        richTextBox.SelectionLength = 0;
+        richTextBox.SelectedText = new string(' ', spacesToInsert);
         richTextBox.SelectionLength = 0;
     }
 
