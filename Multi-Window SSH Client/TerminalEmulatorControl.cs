@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
-using POME;
 
 public enum TerminalMode
 {
@@ -37,9 +36,9 @@ public class TerminalEmulatorControl : RichTextBox
     public event EventHandler<string> CommandEntered;
     public event EventHandler InterruptRequested;
 
-    private Main mainForm;
+    private Form mainForm;
 
-    public TerminalEmulatorControl(Main mainForm)
+    public TerminalEmulatorControl(Form mainForm)
     {
         this.mainForm = mainForm;
         ReadOnly = true;
