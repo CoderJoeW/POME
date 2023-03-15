@@ -146,7 +146,8 @@ public class TerminalEmulatorControl : RichTextBox
     private void RefreshTerminal()
     {
         int outputLength = Math.Min(OutputLength, Text.Length);
-        Text = $"{Text.Substring(0, outputLength)}{Prompt}{inputBuffer}";
+        string processedText = EscapeSequenceHandler.HandleEscapeSequences($"{Text.Substring(0, outputLength)}{Prompt}{inputBuffer}", TerminalMode, this, mainForm);
+        Text = processedText;
         SelectionStart = Text.Length;
     }
 

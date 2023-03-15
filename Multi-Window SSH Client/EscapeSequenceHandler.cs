@@ -32,8 +32,8 @@ public class EscapeSequenceHandler
         int currentIndex = 0;
 
         string pattern = @"\x1B\[([!\#$%&'()*+,-./:;<=>?@A-Z\[\\\]^_`a-z{|}~]*?)[ABCDEFGHJKSTfhilmnprsu]|" +
-                         @"\x1B\](\d+;.+)\x07|" +
-                         @"\x1BPtmux;(.+?)\x1B\\";
+                 @"\x1B\](\d+;.+)\x07|" +
+                 @"\x1BPtmux;(.+?)\x1B\\";
         var matches = Regex.Matches(input, pattern);
         foreach (Match match in matches)
         {
