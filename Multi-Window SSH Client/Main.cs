@@ -20,14 +20,12 @@ namespace POME
             CheckForIllegalCrossThreadCalls = false;
 
             // Create and configure a custom TerminalEmulatorControl
-            _terminalEmulatorControl = new TerminalEmulatorControl
+            _terminalEmulatorControl = new TerminalEmulatorControl(this)
             {
                 Dock = DockStyle.Fill,
                 Font = new Font("Consolas", 10),
                 Prompt = "> ",
-                PromptColor = Color.Green,
-                InputColor = Color.White,
-                OutputColor = Color.Gray
+                TerminalMode = TerminalMode.XTerm
             };
             Controls.Add(_terminalEmulatorControl);
 
@@ -44,11 +42,16 @@ namespace POME
         {
             if (InvokeRequired)
             {
-                Invoke(new Action(() => _terminalEmulatorControl.AppendText(Encoding.ASCII.GetString(e.Data), _terminalEmulatorControl.OutputColor)));
+                Invoke(new Action(() =>
+                {
+                    _terminalEmulatorControl.AppendText(Encoding.ASCII.GetString(e.Data));
+                    _terminalEmulatorControl.ScrollToCaret();
+                }));
             }
             else
             {
-                _terminalEmulatorControl.AppendText(Encoding.ASCII.GetString(e.Data), _terminalEmulatorControl.OutputColor);
+                _terminalEmulatorControl.AppendText(Encoding.ASCII.GetString(e.Data));
+                _terminalEmulatorControl.ScrollToCaret();
             }
         }
 
@@ -56,8 +59,15 @@ namespace POME
         {
             if (_shellStream != null && _shellStream.CanWrite)
             {
-                _shellStream.WriteLine(command);
-                _terminalEmulatorControl.ClearInput();
+                if (command == "CTRL+C")
+                {
+                    _shellStream.Write(new byte[] { 0x03 }, 0, 1); // Send the ASCII value for CTRL+C (0x03)
+                }
+                else
+                {
+                    _shellStream.WriteLine(command);
+                    _terminalEmulatorControl.ClearInput();
+                }
             }
         }
 
@@ -80,7 +90,10 @@ namespace POME
                     int columns = _terminalEmulatorControl.ClientSize.Width / _terminalEmulatorControl.CharWidth;
                     int rows = _terminalEmulatorControl.ClientSize.Height / _terminalEmulatorControl.CharHeight;
 
-                    _shellStream = _sshClient.CreateShellStream("xterm", (uint)columns, (uint)rows, 800, 600, 1024);
+                    // Use the TerminalMode property from the TerminalEmulatorControl
+                    string terminalMode = _terminalEmulatorControl.TerminalMode.ToString().ToLower();
+
+                    _shellStream = _sshClient.CreateShellStream(terminalMode, (uint)columns, (uint)rows, 800, 600, 1024);
                     _shellStream.DataReceived += ShellStream_DataReceived;
 
                     // Set focus to the TerminalEmulatorControl so it can accept keyboard input
@@ -88,5 +101,6 @@ namespace POME
                 }
             }
         }
+
     }
 }
