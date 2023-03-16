@@ -31,9 +31,10 @@ public class EscapeSequenceHandler
     {
         var output = new StringBuilder();
         int curIdx = 0;
-        string pat = @"\x1B(?:\[((?:\d{1,3};)*\d{1,3}[ABCDEFGHJKSTfhilmnprsu]|\?1(?:l|h)|\d{1,3}(?:[ABCD]|[su])|6n|[=c]|[=>]|[=>]|[8Cm]|[7D]|[10q]|[\?12l]|[8Cm]|[\?25l]|[\?25h])|\](\d*);(.*?)\x1B\\|Ptmux;(\x1B(?:\[[^P]*P)*)\x1B\\)";
+        string pat = @"\x1B(?:\[((?:\d{1,3}(?:;\d{1,3})*)?[ABCDEFGHJKSTfhilmnprsu]|\?1(?:l|h)|\d{1,3}(?:[ABCD]|[su])|6n|[=c]|[=>]|[=>]|[8Cm]|[7D]|[10q]|[\?12l]|[8Cm]|[\?25l]|[\?25h]|(\?2004l)|(\?2004h))|\](\d*);(.*?)\x1B\\|Ptmux;(\x1B(?:\[[^P]*P)*)\x1B\\)";
 
-        input = input.Replace("\n", Environment.NewLine);
+        input = input.Replace("\x1B[?2004h", "").Replace("\x1B[?2004l", "");
+        input = input.Replace("\r\n", "\n").Replace('\r', '\n').Replace("\n", Environment.NewLine);
 
         Match m = Regex.Match(input, pat);
         while (m.Success)
@@ -52,6 +53,14 @@ public class EscapeSequenceHandler
                 else if (seq == "[201~") // End bracket pasting mode
                 {
                     EscapeSequenceActions.EndBracketPastingMode(rtb);
+                }
+                else if (seq == "?2004l") // Disable bracketed paste mode
+                {
+                    EscapeSequenceActions.DisableBracketedPasteMode(rtb);
+                }
+                else if (seq == "?2004h") // Enable bracketed paste mode
+                {
+                    EscapeSequenceActions.EnableBracketedPasteMode(rtb);
                 }
                 else
                 {
@@ -106,6 +115,10 @@ public class EscapeSequenceHandler
                     EscapeSequenceActions.SetCursorPosition(richTextBox, parsedParam - 1, parsedParam2 - 1);
                 }
                 break;
+            case 'E': EscapeSequenceActions.CursorNextLine(richTextBox, GetValue()); break;
+            case 'F': EscapeSequenceActions.CursorPreviousLine(richTextBox, GetValue()); break;
+            case '7': EscapeSequenceActions.CursorSave(richTextBox); break;
+            case '8': EscapeSequenceActions.CursorRestore(richTextBox); break;
             case 'S': EscapeSequenceActions.ScrollUp(richTextBox, GetValue()); break;
             case 'T': EscapeSequenceActions.ScrollDown(richTextBox, GetValue()); break;
             case 'm': EscapeSequenceActions.ApplySGRParameters(richTextBox, parameters); break;
@@ -113,6 +126,14 @@ public class EscapeSequenceHandler
             case '@': EscapeSequenceActions.InsertBlankCharacters(richTextBox, GetValue()); break;
             case '[': EscapeSequenceActions.ApplyPrivateModeSet(sequence, richTextBox); break;
             case 'X': EscapeSequenceActions.EraseCharacters(richTextBox, GetValue(1)); break;
+            case 'G': EscapeSequenceActions.CursorHorizontalAbsolute(richTextBox, GetValue(1)); break;
+            case 'K': EscapeSequenceActions.EraseInLine(richTextBox, GetValue(0)); break;
+            case 'l':
+                if (sequence.StartsWith("\x1B[?2004")) // Disable bracketed paste mode
+                {
+                    EscapeSequenceActions.DisableBracketedPasteMode(richTextBox);
+                }
+                break;
             default: break; // Handle other XTerm escape sequences or ignore unknown ones
         }
     }

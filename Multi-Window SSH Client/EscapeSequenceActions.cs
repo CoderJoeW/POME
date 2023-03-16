@@ -18,6 +18,8 @@ namespace POME
 {
     internal class EscapeSequenceActions
     {
+        public static bool BracketedPasteModeEnabled { get; set; } = false;
+
         public static void CursorUp(RichTextBox richTextBox, int lines)
         {
             int currentLine = richTextBox.GetLineFromCharIndex(richTextBox.SelectionStart);
@@ -225,6 +227,78 @@ namespace POME
                     richTextBox.Tag = false;
                 }
             }
+        }
+
+        public static void CursorSave(RichTextBox richTextBox)
+        {
+            richTextBox.Tag = richTextBox.SelectionStart;
+        }
+
+        public static void CursorRestore(RichTextBox richTextBox)
+        {
+            if (richTextBox.Tag is int savedPosition)
+            {
+                richTextBox.SelectionStart = savedPosition;
+            }
+        }
+
+        public static void CursorNextLine(RichTextBox richTextBox, int count)
+        {
+            int currentLine = richTextBox.GetLineFromCharIndex(richTextBox.SelectionStart);
+            int newLine = Math.Min(currentLine + count, richTextBox.Lines.Length - 1);
+            richTextBox.SelectionStart = richTextBox.GetFirstCharIndexFromLine(newLine);
+        }
+
+        public static void CursorPreviousLine(RichTextBox richTextBox, int count)
+        {
+            int currentLine = richTextBox.GetLineFromCharIndex(richTextBox.SelectionStart);
+            int newLine = Math.Max(currentLine - count, 0);
+            richTextBox.SelectionStart = richTextBox.GetFirstCharIndexFromLine(newLine);
+        }
+
+        public static void CursorHorizontalAbsolute(RichTextBox richTextBox, int column)
+        {
+            int currentLine = richTextBox.GetLineFromCharIndex(richTextBox.SelectionStart);
+            int newColumn = Math.Max(column - 1, 0);
+            richTextBox.SelectionStart = richTextBox.GetFirstCharIndexFromLine(currentLine) + newColumn;
+        }
+
+        public static void EraseInLine(RichTextBox richTextBox, int mode)
+        {
+            int currentLine = richTextBox.GetLineFromCharIndex(richTextBox.SelectionStart);
+            int lineStart = richTextBox.GetFirstCharIndexFromLine(currentLine);
+            int lineEnd = richTextBox.GetFirstCharIndexFromLine(currentLine + 1) - 1;
+            int currentPos = richTextBox.SelectionStart;
+
+            if (mode == 0)
+            {
+                richTextBox.SelectionStart = currentPos;
+                richTextBox.SelectionLength = lineEnd - currentPos;
+            }
+            else if (mode == 1)
+            {
+                richTextBox.SelectionStart = lineStart;
+                richTextBox.SelectionLength = currentPos - lineStart;
+            }
+            else if (mode == 2)
+            {
+                richTextBox.SelectionStart = lineStart;
+                richTextBox.SelectionLength = lineEnd - lineStart;
+            }
+
+            richTextBox.SelectedText = new string(' ', richTextBox.SelectionLength);
+            richTextBox.SelectionStart = currentPos;
+            richTextBox.SelectionLength = 0;
+        }
+
+        public static void DisableBracketedPasteMode(RichTextBox richTextBox)
+        {
+            BracketedPasteModeEnabled = false;
+        }
+
+        public static void EnableBracketedPasteMode(RichTextBox richTextBox)
+        {
+            BracketedPasteModeEnabled = true;
         }
     }
 }

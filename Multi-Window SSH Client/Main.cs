@@ -24,7 +24,7 @@ namespace POME
             {
                 Dock = DockStyle.Fill,
                 Font = new Font("Consolas", 10),
-                Prompt = "> ",
+                Prompt = ">",
                 TerminalMode = TerminalMode.XTerm
             };
             Controls.Add(_terminalEmulatorControl);
