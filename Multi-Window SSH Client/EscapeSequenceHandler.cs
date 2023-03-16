@@ -41,7 +41,21 @@ public class EscapeSequenceHandler
 
             string seq = m.Groups[1].Value, oscSeq = m.Groups[2].Value, tmuxSeq = m.Groups[4].Value;
 
-            if (!string.IsNullOrEmpty(seq)) ApplyXTermSequence(seq, rtb);
+            if (!string.IsNullOrEmpty(seq))
+            {
+                if (seq == "[200~") // Start bracket pasting mode
+                {
+                    StartBracketPastingMode(rtb);
+                }
+                else if (seq == "[201~") // End bracket pasting mode
+                {
+                    EndBracketPastingMode(rtb);
+                }
+                else
+                {
+                    ApplyXTermSequence(seq, rtb);
+                }
+            }
             else if (!string.IsNullOrEmpty(oscSeq)) HandleOscSequence(oscSeq, mainForm);
             else if (!string.IsNullOrEmpty(tmuxSeq)) HandleTmuxSequence(tmuxSeq, rtb);
 
@@ -51,13 +65,7 @@ public class EscapeSequenceHandler
 
         if (curIdx < input.Length)
         {
-            bool isBPMEnabled = rtb.Tag is bool isEnabled && isEnabled;
-
-            if (isBPMEnabled) output.Append("\x1B[200~"); // BPM start sequence
-
             output.Append(input.Substring(curIdx));
-
-            if (isBPMEnabled) output.Append("\x1B[201~"); // BPM end sequence
         }
 
         return output.ToString();
@@ -98,6 +106,7 @@ public class EscapeSequenceHandler
             case 'J': EraseInDisplay(richTextBox, GetValue(0)); break;
             case '@': InsertBlankCharacters(richTextBox, GetValue()); break;
             case '[': ApplyPrivateModeSet(sequence, richTextBox); break;
+            case 'X': EraseCharacters(richTextBox, GetValue(1)); break;
             default: break; // Handle other XTerm escape sequences or ignore unknown ones
         }
     }
@@ -114,6 +123,16 @@ public class EscapeSequenceHandler
         }
     }
 
+    private static void EraseCharacters(RichTextBox richTextBox, int count)
+    {
+        int start = richTextBox.SelectionStart;
+        int length = Math.Min(count, richTextBox.Text.Length - start);
+
+        richTextBox.SelectionLength = length;
+        richTextBox.SelectedText = new string(' ', length);
+        richTextBox.SelectionLength = 0;
+        richTextBox.SelectionStart = start;
+    }
 
     private static void ApplyPrivateModeSet(string sequence, RichTextBox richTextBox)
     {
@@ -194,6 +213,16 @@ public class EscapeSequenceHandler
             richTextBox.SelectionStart = richTextBox.GetFirstCharIndexFromLine(richTextBox.Lines.Length - 1);
         }
         richTextBox.ScrollToCaret();
+    }
+
+    private static void StartBracketPastingMode(RichTextBox richTextBox)
+    {
+        richTextBox.Tag = true;
+    }
+
+    private static void EndBracketPastingMode(RichTextBox richTextBox)
+    {
+        richTextBox.Tag = false;
     }
 
     private static void EraseInDisplay(RichTextBox richTextBox, int mode)

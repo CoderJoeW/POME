@@ -166,6 +166,7 @@
     <Compile Include="AppContainer.Designer.cs">
       <DependentUpon>AppContainer.cs</DependentUpon>
     </Compile>
+    <Compile Include="ColorHandler.cs" />
     <Compile Include="ErrorWindow.cs">
       <SubType>Form</SubType>
     </Compile>

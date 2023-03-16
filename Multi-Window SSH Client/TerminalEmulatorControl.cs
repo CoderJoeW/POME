@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
 
 public enum TerminalMode
 {
@@ -41,12 +42,13 @@ public class TerminalEmulatorControl : RichTextBox
     public TerminalEmulatorControl(Form mainForm)
     {
         this.mainForm = mainForm;
-        ReadOnly = true;
+        ReadOnly = false;
         WordWrap = false;
         inputBuffer = new StringBuilder();
 
         KeyPress += TerminalEmulatorControl_KeyPress;
         KeyDown += TerminalEmulatorControl_KeyDown;
+        MouseUp += TerminalEmulatorControl_MouseUp;
         ShortcutsEnabled = false;
     }
 
@@ -68,54 +70,15 @@ public class TerminalEmulatorControl : RichTextBox
 
     private void TerminalEmulatorControl_KeyDown(object sender, KeyEventArgs e)
     {
-        if (e.KeyCode == Keys.Back)
+
+    }
+
+    private void TerminalEmulatorControl_MouseUp(object sender, MouseEventArgs e)
+    {
+        if (SelectedText.Length > 0)
         {
-            if (inputBuffer.Length > 0)
-            {
-                inputBuffer.Remove(inputBuffer.Length - 1, 1);
-                RefreshTerminal();
-            }
-            e.Handled = true;
+            Clipboard.SetText(SelectedText);
         }
-        else if (e.KeyCode == Keys.Delete)
-        {
-            if (inputBuffer.Length > 0)
-            {
-                inputBuffer.Clear();
-                RefreshTerminal();
-            }
-            e.Handled = true;
-        }
-        else if (e.KeyCode == Keys.C && e.Control)
-        {
-            if (SelectedText.Length > 0)
-            {
-                Clipboard.SetText(SelectedText);
-            }
-            else
-            {
-                OnCommandEntered("CTRL+C");
-            }
-            e.Handled = true;
-        }
-        else if (e.KeyCode == Keys.L && e.Control)
-        {
-            Clear();
-            RefreshTerminal();
-            e.Handled = true;
-        }
-        else if (e.KeyCode == Keys.V && e.Control)
-        {
-            inputBuffer.Append(Clipboard.GetText());
-            RefreshTerminal();
-            e.Handled = true;
-        }
-        else if (e.KeyCode == Keys.A && e.Control)
-        {
-            SelectAll();
-            e.Handled = true;
-        }
-        // Additional key handling can be added here if necessary
     }
 
     protected virtual void OnCommandEntered(string command)
@@ -150,5 +113,4 @@ public class TerminalEmulatorControl : RichTextBox
         Text = processedText;
         SelectionStart = Text.Length;
     }
-
 }
