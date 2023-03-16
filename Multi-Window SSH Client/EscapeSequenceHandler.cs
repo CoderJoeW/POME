@@ -31,9 +31,12 @@ public class EscapeSequenceHandler
         StringBuilder output = new StringBuilder();
         int currentIndex = 0;
 
-        string pattern = @"\x1B\[([!\#$%&'()*+,-./:;<=>?@A-Z\[\\\]^_`a-z{|}~]*?)[ABCDEFGHJKSTfhilmnprsu]|" +
-                 @"\x1B\](\d+;.+)\x07|" +
-                 @"\x1BPtmux;(.+?)\x1B\\";
+        string pattern = @"\x1B\[((?:\d{1,3};)*\d{1,3}[ABCDEFGHJKSTfhilmnprsu]|\?1(?:l|h)|\d{1,3}(?:[ABCD]|[su])|6n|[=c]|[=>]|[=>]|[8Cm]|[7D]|[10q]|[\?12l]|[8Cm]|[\?25l]|[\?25h])";
+        string oscPattern = @"\x1B\](\d*);(.*?)\x1B\\";
+        string tmuxPattern = @"\x1BPtmux;(\x1B(?:\[[^P]*P)*)\x1B\\";
+
+        pattern = pattern + "|" + oscPattern + "|" + tmuxPattern;
+
         var matches = Regex.Matches(input, pattern);
         foreach (Match match in matches)
         {
@@ -62,7 +65,19 @@ public class EscapeSequenceHandler
 
         if (currentIndex < input.Length)
         {
+            bool isBracketedPasteModeEnabled = richTextBox.Tag is bool isEnabled && isEnabled;
+
+            if (isBracketedPasteModeEnabled)
+            {
+                output.Append("\x1B[200~"); // Bracketed paste mode start sequence
+            }
+
             output.Append(input.Substring(currentIndex));
+
+            if (isBracketedPasteModeEnabled)
+            {
+                output.Append("\x1B[201~"); // Bracketed paste mode end sequence
+            }
         }
 
         return output.ToString();
@@ -123,32 +138,39 @@ public class EscapeSequenceHandler
                     {
                         if (parsedParam >= 30 && parsedParam <= 37) // Set foreground color (basic 8 colors)
                         {
-                            richTextBox.SelectionColor = GetBasicColor(parsedParam - 30);
+                            richTextBox.SelectionColor = GetColorFromSGRCode(parsedParam);
+                        }
+                        else if (parsedParam >= 90 && parsedParam <= 97) // Set bright foreground color
+                        {
+                            richTextBox.SelectionColor = GetColorFromSGRCode(parsedParam);
                         }
                         else if (parsedParam >= 40 && parsedParam <= 47) // Set background color (basic 8 colors)
                         {
-                            richTextBox.SelectionBackColor = GetBasicColor(parsedParam - 40);
+                            richTextBox.SelectionBackColor = GetColorFromSGRCode(parsedParam);
                         }
-                        else if (parsedParam == 38 || parsedParam == 48) // Set foreground (38) or background (48) extended color
+                        else if (parsedParam >= 100 && parsedParam <= 107) // Set bright background color
                         {
-                            Color color = GetExtendedColor(parameters[i], parameters);
-                            if (!color.IsEmpty)
-                            {
-                                if (parsedParam == 38)
-                                {
-                                    richTextBox.SelectionColor = color;
-                                }
-                                else
-                                {
-                                    richTextBox.SelectionBackColor = color;
-                                }
-                            }
-                            i += color.IsEmpty ? 0 : 2;
+                            richTextBox.SelectionBackColor = GetColorFromSGRCode(parsedParam);
                         }
                         else if (parsedParam == 0) // Reset all attributes
                         {
                             richTextBox.SelectionColor = Color.White;
                             richTextBox.SelectionBackColor = Color.Black;
+                        }
+                        else if (parsedParam == 38 || parsedParam == 48) // Extended colors
+                        {
+                            Color extendedColor = GetExtendedColor(parameters[i], parameters);
+                            if (extendedColor != Color.Empty)
+                            {
+                                if (parsedParam == 38)
+                                {
+                                    richTextBox.SelectionColor = extendedColor;
+                                }
+                                else
+                                {
+                                    richTextBox.SelectionBackColor = extendedColor;
+                                }
+                            }
                         }
                         // Add more cases for other SGR parameters as needed
                     }
@@ -161,6 +183,19 @@ public class EscapeSequenceHandler
             case '@': // Insert blank characters
                 value = parameters.Length > 0 && int.TryParse(parameters[0], out parsedParam) ? parsedParam : 1;
                 InsertBlankCharacters(richTextBox, value);
+                break;
+            case '[': // Private Mode Set (DECSET)
+                if (sequence.StartsWith("?2004"))
+                {
+                    if (sequence.EndsWith("h")) // Enable Bracketed Paste Mode
+                    {
+                        richTextBox.Tag = true;
+                    }
+                    else if (sequence.EndsWith("l")) // Disable Bracketed Paste Mode
+                    {
+                        richTextBox.Tag = false;
+                    }
+                }
                 break;
 
             // Add and update cases for additional XTerm escape sequences
@@ -207,7 +242,6 @@ public class EscapeSequenceHandler
             richTextBox.ScrollToCaret();
         }
     }
-
 
     private static void ScrollUp(RichTextBox richTextBox, int lines)
     {
@@ -294,76 +328,126 @@ public class EscapeSequenceHandler
         }
     }
 
-    private static Color GetBasicColor(int index)
+    private static Color GetColorFromSGRCode(int code)
     {
-        Color[] basicColors = new Color[]
+        // Return the corresponding color for the given SGR color code
+        switch (code)
         {
-Color.Black,
-Color.Red,
-Color.Green,
-Color.Yellow,
-Color.Blue,
-Color.Magenta,
-Color.Cyan,
-Color.White
-        };
-
-        return basicColors[index];
+            case 30: return Color.Black;
+            case 31: return Color.Red;
+            case 32: return Color.Green;
+            case 33: return Color.Yellow;
+            case 34: return Color.Blue;
+            case 35: return Color.Magenta;
+            case 36: return Color.Cyan;
+            case 37: return Color.White;
+            case 90: return Color.FromArgb(128, 128, 128); // Bright Black
+            case 91: return Color.FromArgb(255, 0, 0); // Bright Red
+            case 92: return Color.FromArgb(0, 255, 0); // Bright Green
+            case 93: return Color.FromArgb(255, 255, 0); // Bright Yellow
+            case 94: return Color.FromArgb(0, 0, 255); // Bright Blue
+            case 95: return Color.FromArgb(255, 0, 255); // Bright Magenta
+            case 96: return Color.FromArgb(0, 255, 255); // Bright Cyan
+            case 97: return Color.FromArgb(255, 255, 255); // Bright White
+            default:
+                return Color.Empty;
+        }
     }
 
-    private static Color GetExtendedColor(string param, string[] parameters)
+    private static Color GetExtendedColor(string currentParam, string[] parameters)
     {
-        int startIndex = Array.IndexOf(parameters, param);
-        if (startIndex + 1 < parameters.Length)
+        int currentIndex = Array.IndexOf(parameters, currentParam);
+        int colorMode;
+        int red, green, blue;
+
+        if (currentIndex < 0 || currentIndex + 1 >= parameters.Length)
         {
-            int colorMode = int.Parse(parameters[startIndex + 1]);
-            if (colorMode == 5 && startIndex + 2 < parameters.Length)
+            return Color.Empty;
+        }
+
+        if (int.TryParse(parameters[currentIndex + 1], out colorMode))
+        {
+            if (colorMode == 2 && currentIndex + 4 < parameters.Length) // RGB mode
             {
-                int colorIndex = int.Parse(parameters[startIndex + 2]);
-                return Get256Color(colorIndex);
+                if (int.TryParse(parameters[currentIndex + 2], out red) &&
+                    int.TryParse(parameters[currentIndex + 3], out green) &&
+                    int.TryParse(parameters[currentIndex + 4], out blue))
+                {
+                    return Color.FromArgb(red, green, blue);
+                }
             }
-            else if (colorMode == 2 && startIndex + 4 < parameters.Length)
+            else if (colorMode == 5 && currentIndex + 2 < parameters.Length) // 256-color mode
             {
-                int r = int.Parse(parameters[startIndex + 2]);
-                int g = int.Parse(parameters[startIndex + 3]);
-                int b = int.Parse(parameters[startIndex + 4]);
-                return Color.FromArgb(r, g, b);
+                int colorIndex;
+                if (int.TryParse(parameters[currentIndex + 2], out colorIndex))
+                {
+                    return GetColorFrom256ColorPalette(colorIndex);
+                }
             }
         }
+
         return Color.Empty;
     }
 
-    private static Color Get256Color(int index)
+    private static Color GetColorFrom256ColorPalette(int index)
     {
-        // Implement 256-color palette logic
-        // You can use a predefined color palette array or calculate the
-        // color basedon the index value
-        Color[] colorPalette = new Color[256];
-        // ... Fill the colorPalette array with 256 colors
-        // Calculate the 256-color palette based on the index value
-        if (index >= 0 && index <= 15)
+        if (index < 0 || index >= 256)
         {
-            // Standard colors
-            return GetBasicColor(index % 8);
+            return Color.Empty;
         }
-        else if (index >= 16 && index <= 231)
-        {
-            // 216 RGB colors
-            index -= 16;
-            int r = index / 36;
-            int g = (index / 6) % 6;
-            int b = index % 6;
 
-            return Color.FromArgb(r * 51, g * 51, b * 51);
-        }
-        else if (index >= 232 && index <= 255)
+        if (index < 16)
         {
-            // Grayscale colors
+            // 16 basic colors
+            return GetColorFromBasic16ColorPalette(index);
+        }
+        else if (index < 232)
+        {
+            // 216 colors (6x6x6 RGB color cube)
+            index -= 16;
+            int red = index / 36;
+            int green = (index % 36) / 6;
+            int blue = index % 6;
+
+            // Convert to RGB values
+            red = red * 51;
+            green = green * 51;
+            blue = blue * 51;
+
+            return Color.FromArgb(red, green, blue);
+        }
+        else
+        {
+            // 24 grayscale colors
             int gray = (index - 232) * 10 + 8;
             return Color.FromArgb(gray, gray, gray);
         }
-
-        return Color.Empty;
     }
+
+    private static Color GetColorFromBasic16ColorPalette(int index)
+    {
+        // Map the basic 16-color palette indices to the actual colors
+        switch (index)
+        {
+            case 0: return Color.Black;
+            case 1: return Color.Maroon;
+            case 2: return Color.Green;
+            case 3: return Color.Olive;
+            case 4: return Color.Navy;
+            case 5: return Color.Purple;
+            case 6: return Color.Teal;
+            case 7: return Color.Silver;
+            case 8: return Color.Gray;
+            case 9: return Color.Red;
+            case 10: return Color.Lime;
+            case 11: return Color.Yellow;
+            case 12: return Color.Blue;
+            case 13: return Color.Magenta;
+            case 14: return Color.Cyan;
+            case 15: return Color.White;
+            default: return Color.Empty;
+        }
+    }
+
 }
 
