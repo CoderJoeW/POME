@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows.Forms;
 using Renci.SshNet;
 using Renci.SshNet.Common;
+using TerminalEmulator;
 
 namespace POME
 {
@@ -11,7 +12,7 @@ namespace POME
     {
         private SshClient _sshClient;
         private ShellStream _shellStream;
-        private TerminalEmulatorControl _terminalEmulatorControl;
+        private TerminalControl _terminalEmulatorControl;
 
         public Main()
         {
@@ -20,7 +21,7 @@ namespace POME
             CheckForIllegalCrossThreadCalls = false;
 
             // Create and configure a custom TerminalEmulatorControl
-            _terminalEmulatorControl = new TerminalEmulatorControl(this)
+            /*_terminalEmulatorControl = new TerminalEmulatorControl(this)
             {
                 Dock = DockStyle.Fill,
                 Font = new Font("Consolas", 10),
@@ -30,7 +31,14 @@ namespace POME
             Controls.Add(_terminalEmulatorControl);
 
             // Subscribe to CommandEntered event
-            _terminalEmulatorControl.CommandEntered += _terminalEmulatorControl_CommandEntered;
+            _terminalEmulatorControl.CommandEntered += _terminalEmulatorControl_CommandEntered;*/
+
+            // Create and configure a custom TerminalEmulatorControl
+            _terminalEmulatorControl = new TerminalControl()
+            {
+                Dock = DockStyle.Fill,
+            };
+            Controls.Add(_terminalEmulatorControl);
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -38,42 +46,9 @@ namespace POME
             ShowSessionDetailsDialog();
         }
 
-        private void ShellStream_DataReceived(object sender, ShellDataEventArgs e)
-        {
-            if (InvokeRequired)
-            {
-                Invoke(new Action(() =>
-                {
-                    _terminalEmulatorControl.AppendText(Encoding.ASCII.GetString(e.Data));
-                    _terminalEmulatorControl.ScrollToCaret();
-                }));
-            }
-            else
-            {
-                _terminalEmulatorControl.AppendText(Encoding.ASCII.GetString(e.Data));
-                _terminalEmulatorControl.ScrollToCaret();
-            }
-        }
-
-        private void _terminalEmulatorControl_CommandEntered(object sender, string command)
-        {
-            if (_shellStream != null && _shellStream.CanWrite)
-            {
-                if (command == "CTRL+C")
-                {
-                    _shellStream.Write(new byte[] { 0x03 }, 0, 1); // Send the ASCII value for CTRL+C (0x03)
-                }
-                else
-                {
-                    _shellStream.WriteLine(command);
-                    _terminalEmulatorControl.ClearInput();
-                }
-            }
-        }
-
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _sshClient?.Dispose();
+            _terminalEmulatorControl.Disconnect();
         }
 
         private void ShowSessionDetailsDialog()
@@ -82,21 +57,8 @@ namespace POME
             {
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    var connectionInfo = new ConnectionInfo(form.Host, form.Port, form.Username, new PasswordAuthenticationMethod(form.Username, form.Password));
+                    _terminalEmulatorControl.Connect(form.Host, form.Username, form.Password);
 
-                    _sshClient = new SshClient(connectionInfo);
-                    _sshClient.Connect();
-
-                    int columns = _terminalEmulatorControl.ClientSize.Width / _terminalEmulatorControl.CharWidth;
-                    int rows = _terminalEmulatorControl.ClientSize.Height / _terminalEmulatorControl.CharHeight;
-
-                    // Use the TerminalMode property from the TerminalEmulatorControl
-                    string terminalMode = _terminalEmulatorControl.TerminalMode.ToString().ToLower();
-
-                    _shellStream = _sshClient.CreateShellStream(terminalMode, (uint)columns, (uint)rows, 800, 600, 1024);
-                    _shellStream.DataReceived += ShellStream_DataReceived;
-
-                    // Set focus to the TerminalEmulatorControl so it can accept keyboard input
                     _terminalEmulatorControl.Focus();
                 }
             }
