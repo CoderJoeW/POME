@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
@@ -6,13 +7,7 @@ namespace TerminalEmulator
 {
     public class TerminalStateMachine
     {
-        private enum State
-        {
-            Normal,
-            Escape,
-            Bracket
-        }
-
+        private enum State { Normal, Escape, Bracket }
         private State currentState;
         private StringBuilder escapeSequenceBuffer;
         private RichTextBox terminalDisplay;
@@ -26,34 +21,17 @@ namespace TerminalEmulator
 
         public void ProcessBuffer(StringBuilder dataBuffer)
         {
-            for (int i = 0; i < dataBuffer.Length; i++)
+            foreach (char currentChar in dataBuffer.ToString())
             {
-                char currentChar = dataBuffer[i];
-
                 switch (currentState)
                 {
                     case State.Normal:
-                        if (currentChar == '\x1B')
-                        {
-                            currentState = State.Escape;
-                        }
-                        else
-                        {
-                            terminalDisplay.AppendText(currentChar.ToString());
-                        }
+                        currentState = (currentChar == '\x1B') ? State.Escape : State.Normal;
+                        if (currentState == State.Normal) terminalDisplay.AppendText(currentChar.ToString());
                         break;
-
                     case State.Escape:
-                        if (currentChar == '[')
-                        {
-                            currentState = State.Bracket;
-                        }
-                        else
-                        {
-                            currentState = State.Normal;
-                        }
+                        currentState = (currentChar == '[') ? State.Bracket : State.Normal;
                         break;
-
                     case State.Bracket:
                         escapeSequenceBuffer.Append(currentChar);
                         if (currentChar >= '@' && currentChar <= '~')
@@ -75,12 +53,49 @@ namespace TerminalEmulator
 
             switch (commandChar)
             {
-                case 'm': // Set graphics mode
-                    HandleGraphicsMode(codes);
-                    break;
-
-                    // Add cases to handle other commands as needed
+                case 'm': HandleGraphicsMode(codes); break;
+                case 'A':
+                case 'B':
+                case 'C':
+                case 'D': MoveCursor(commandChar, content); break;
+                case 'J':
+                case 'K': ClearScreenOrLine(commandChar, content); break;
+                case 'H':
+                case 'f': SetCursorPosition(content); break;
             }
+        }
+
+        private void SetCursorPosition(string content)
+        {
+            var parts = content.Split(';');
+            if (parts.Length != 2) return;
+            int.TryParse(parts[0], out int row);
+            int.TryParse(parts[1], out int col);
+            int position = terminalDisplay.GetFirstCharIndexFromLine(row - 1) + (col - 1);
+            terminalDisplay.SelectionStart = Math.Min(terminalDisplay.Text.Length, position);
+        }
+
+        private void MoveCursor(char command, string content)
+        {
+            int.TryParse(content, out int distance);
+            distance = distance == 0 ? 1 : distance;
+            int[] indexChange = { -terminalDisplay.GetFirstCharIndexFromLine(1), terminalDisplay.GetFirstCharIndexFromLine(1), 1, -1 };
+            int idx = "ABCD".IndexOf(command);
+            terminalDisplay.SelectionStart = Math.Max(0, Math.Min(terminalDisplay.Text.Length, terminalDisplay.SelectionStart + distance * indexChange[idx]));
+        }
+
+        private void ClearScreenOrLine(char command, string content)
+        {
+            int.TryParse(content, out int mode);
+            int currentLine = terminalDisplay.GetLineFromCharIndex(terminalDisplay.SelectionStart);
+            int currentColumn = terminalDisplay.SelectionStart - terminalDisplay.GetFirstCharIndexFromLine(currentLine);
+            int[] startIdx = { terminalDisplay.SelectionStart, 0, terminalDisplay.GetFirstCharIndexFromLine(currentLine) };
+            int[] lengthIdx = { terminalDisplay.Text.Length - terminalDisplay.SelectionStart, currentLine * terminalDisplay.GetFirstCharIndexFromLine(1) + currentColumn
+                    , terminalDisplay.GetFirstCharIndexFromLine(currentLine + 1) - terminalDisplay.SelectionStart };
+            int idx = (command == 'J') ? mode : mode + 3;
+            terminalDisplay.SelectionStart = startIdx[idx];
+            terminalDisplay.SelectionLength = lengthIdx[idx];
+            terminalDisplay.SelectedText = "";
         }
 
         private void HandleGraphicsMode(string[] codes)
@@ -89,7 +104,6 @@ namespace TerminalEmulator
             {
                 if (int.TryParse(codeStr, out int code))
                 {
-                    // Handle common ANSI escape codes
                     switch (code)
                     {
                         case 0:
@@ -103,27 +117,11 @@ namespace TerminalEmulator
                         case 4:
                             terminalDisplay.SelectionFont = new Font(terminalDisplay.Font, FontStyle.Underline);
                             break;
-                        case 30:
-                        case 31:
-                        case 32:
-                        case 33:
-                        case 34:
-                        case 35:
-                        case 36:
-                        case 37:
-                            // Set foreground color based on the ANSI code
-                            terminalDisplay.SelectionColor = AnsiCodeToColor(code - 30);
-                            break;
-                        case 40:
-                        case 41:
-                        case 42:
-                        case 43:
-                        case 44:
-                        case 45:
-                        case 46:
-                        case 47:
-                            // Set background color based on the ANSI code
-                            terminalDisplay.SelectionBackColor = AnsiCodeToColor(code - 40);
+                        default:
+                            if (code >= 30 && code <= 37)
+                                terminalDisplay.SelectionColor = AnsiCodeToColor(code - 30);
+                            else if (code >= 40 && code <= 47)
+                                terminalDisplay.SelectionBackColor = AnsiCodeToColor(code - 40);
                             break;
                     }
                 }
@@ -132,25 +130,8 @@ namespace TerminalEmulator
 
         private Color AnsiCodeToColor(int code)
         {
-            // Basic ANSI colors
-            Color[] colors = new Color[]
-            {
-                Color.Black,     // 0
-                Color.Red,       // 1
-                Color.Green,     // 2
-                Color.Yellow,    // 3
-                Color.Blue,      // 4
-                Color.Magenta,   // 5
-                Color.Cyan,      // 6
-                Color.White      // 7
-            };
-
-            if (code >= 0 && code < colors.Length)
-            {
-                return colors[code];
-            }
-
-            return Color.White;
+            Color[] colors = { Color.Black, Color.Red, Color.Green, Color.Yellow, Color.Blue, Color.Magenta, Color.Cyan, Color.White };
+            return (code >= 0 && code < colors.Length) ? colors[code] : Color.White;
         }
     }
 }
