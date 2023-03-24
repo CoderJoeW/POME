@@ -23,7 +23,7 @@ namespace TerminalEmulator
 
         private void InitializeComponents()
         {
-            terminalDisplay = new RichTextBox
+            terminalDisplay = new RichTextBox()
             {
                 Dock = DockStyle.Fill,
                 Font = new Font("Consolas", 12),
@@ -40,7 +40,7 @@ namespace TerminalEmulator
         {
             sshClient = new SshClient(host, username, password);
             sshClient.Connect();
-            shellStream = sshClient.CreateShellStream("dumb", 80, 24, 800, 600, 4096);
+            shellStream = sshClient.CreateShellStream("xterm", 80, 24, 800, 600, 4096);
             terminalDisplay.AppendText($"Connected to {host}\n");
 
             // Start reading from the shell

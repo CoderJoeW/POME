@@ -20,20 +20,6 @@ namespace POME
 
             CheckForIllegalCrossThreadCalls = false;
 
-            // Create and configure a custom TerminalEmulatorControl
-            /*_terminalEmulatorControl = new TerminalEmulatorControl(this)
-            {
-                Dock = DockStyle.Fill,
-                Font = new Font("Consolas", 10),
-                Prompt = ">",
-                TerminalMode = TerminalMode.XTerm
-            };
-            Controls.Add(_terminalEmulatorControl);
-
-            // Subscribe to CommandEntered event
-            _terminalEmulatorControl.CommandEntered += _terminalEmulatorControl_CommandEntered;*/
-
-            // Create and configure a custom TerminalEmulatorControl
             _terminalEmulatorControl = new TerminalControl()
             {
                 Dock = DockStyle.Fill,

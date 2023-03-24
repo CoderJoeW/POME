@@ -1,5 +1,7 @@
-﻿using System;
+﻿using POME;
+using System;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -7,16 +9,18 @@ namespace TerminalEmulator
 {
     public class TerminalStateMachine
     {
-        private enum State { Normal, Escape, Bracket }
+        private enum State { Normal, Escape, Bracket, Parenthesis, OperatingSystemCommand }
         private State currentState;
         private StringBuilder escapeSequenceBuffer;
         private RichTextBox terminalDisplay;
+        private Point savedCursorPosition;
 
         public TerminalStateMachine(RichTextBox terminalDisplay)
         {
             this.terminalDisplay = terminalDisplay;
             currentState = State.Normal;
             escapeSequenceBuffer = new StringBuilder();
+            savedCursorPosition = new Point(0, 0);
         }
 
         public void ProcessBuffer(StringBuilder dataBuffer)
@@ -27,10 +31,47 @@ namespace TerminalEmulator
                 {
                     case State.Normal:
                         currentState = (currentChar == '\x1B') ? State.Escape : State.Normal;
-                        if (currentState == State.Normal) terminalDisplay.AppendText(currentChar.ToString());
+
+                        // Handle the backspace character
+                        if (currentChar == '\b')
+                        {
+                            if (terminalDisplay.SelectionStart > 0)
+                            {
+                                terminalDisplay.SelectionStart--;
+                                terminalDisplay.SelectionLength = 1;
+                                terminalDisplay.SelectedText = "";
+                            }
+                        }
+                        else if (currentState == State.Normal)
+                        {
+                            if (currentChar == '\n')
+                            {
+                                terminalDisplay.AppendText(Environment.NewLine);
+                            }
+                            else
+                            {
+                                terminalDisplay.AppendText(currentChar.ToString());
+                            }
+                        }
                         break;
                     case State.Escape:
-                        currentState = (currentChar == '[') ? State.Bracket : State.Normal;
+                        if (currentChar == '[')
+                            currentState = State.Bracket;
+                        else if (currentChar == '(' || currentChar == ')')
+                            currentState = State.Parenthesis;
+                        else if (currentChar == ']')
+                            currentState = State.OperatingSystemCommand;
+                        else
+                            currentState = State.Normal;
+                        break;
+                    case State.OperatingSystemCommand:
+                        escapeSequenceBuffer.Append(currentChar);
+                        if (currentChar == '\x07')
+                        {
+                            XTermActions.HandleOperatingSystemCommand(escapeSequenceBuffer.ToString());
+                            escapeSequenceBuffer.Clear();
+                            currentState = State.Normal;
+                        }
                         break;
                     case State.Bracket:
                         escapeSequenceBuffer.Append(currentChar);
@@ -40,6 +81,10 @@ namespace TerminalEmulator
                             escapeSequenceBuffer.Clear();
                             currentState = State.Normal;
                         }
+                        break;
+                    case State.Parenthesis:
+                        // Skipping character set selection implementation as it's rarely used in modern terminals
+                        currentState = State.Normal;
                         break;
                 }
             }
@@ -53,85 +98,22 @@ namespace TerminalEmulator
 
             switch (commandChar)
             {
-                case 'm': HandleGraphicsMode(codes); break;
+                case 'm': XTermActions.HandleGraphicsMode(codes, terminalDisplay); break;
                 case 'A':
                 case 'B':
                 case 'C':
-                case 'D': MoveCursor(commandChar, content); break;
+                case 'D': XTermActions.MoveCursor(commandChar, content, terminalDisplay); break;
                 case 'J':
-                case 'K': ClearScreenOrLine(commandChar, content); break;
+                case 'K': XTermActions.ClearScreenOrLine(commandChar, content, terminalDisplay); break;
                 case 'H':
-                case 'f': SetCursorPosition(content); break;
+                case 'f': XTermActions.SetCursorPosition(content, terminalDisplay); break;
+                case 's': XTermActions.SaveCursorPosition(terminalDisplay, savedCursorPosition); break;
+                case 'u': XTermActions.RestoreCursorPosition(terminalDisplay, savedCursorPosition); break;
+                case 'L': XTermActions.InsertLines(content, terminalDisplay); break;
+                case 'M': XTermActions.DeleteLines(content, terminalDisplay); break;
+                case 'P': XTermActions.DeleteCharacters(content, terminalDisplay); break;
+                case 'X': XTermActions.EraseCharacters(content, terminalDisplay); break;
             }
-        }
-
-        private void SetCursorPosition(string content)
-        {
-            var parts = content.Split(';');
-            if (parts.Length != 2) return;
-            int.TryParse(parts[0], out int row);
-            int.TryParse(parts[1], out int col);
-            int position = terminalDisplay.GetFirstCharIndexFromLine(row - 1) + (col - 1);
-            terminalDisplay.SelectionStart = Math.Min(terminalDisplay.Text.Length, position);
-        }
-
-        private void MoveCursor(char command, string content)
-        {
-            int.TryParse(content, out int distance);
-            distance = distance == 0 ? 1 : distance;
-            int[] indexChange = { -terminalDisplay.GetFirstCharIndexFromLine(1), terminalDisplay.GetFirstCharIndexFromLine(1), 1, -1 };
-            int idx = "ABCD".IndexOf(command);
-            terminalDisplay.SelectionStart = Math.Max(0, Math.Min(terminalDisplay.Text.Length, terminalDisplay.SelectionStart + distance * indexChange[idx]));
-        }
-
-        private void ClearScreenOrLine(char command, string content)
-        {
-            int.TryParse(content, out int mode);
-            int currentLine = terminalDisplay.GetLineFromCharIndex(terminalDisplay.SelectionStart);
-            int currentColumn = terminalDisplay.SelectionStart - terminalDisplay.GetFirstCharIndexFromLine(currentLine);
-            int[] startIdx = { terminalDisplay.SelectionStart, 0, terminalDisplay.GetFirstCharIndexFromLine(currentLine) };
-            int[] lengthIdx = { terminalDisplay.Text.Length - terminalDisplay.SelectionStart, currentLine * terminalDisplay.GetFirstCharIndexFromLine(1) + currentColumn
-                    , terminalDisplay.GetFirstCharIndexFromLine(currentLine + 1) - terminalDisplay.SelectionStart };
-            int idx = (command == 'J') ? mode : mode + 3;
-            terminalDisplay.SelectionStart = startIdx[idx];
-            terminalDisplay.SelectionLength = lengthIdx[idx];
-            terminalDisplay.SelectedText = "";
-        }
-
-        private void HandleGraphicsMode(string[] codes)
-        {
-            foreach (string codeStr in codes)
-            {
-                if (int.TryParse(codeStr, out int code))
-                {
-                    switch (code)
-                    {
-                        case 0:
-                            terminalDisplay.SelectionColor = Color.White;
-                            terminalDisplay.SelectionBackColor = Color.Black;
-                            terminalDisplay.SelectionFont = new Font(terminalDisplay.Font, FontStyle.Regular);
-                            break;
-                        case 1:
-                            terminalDisplay.SelectionFont = new Font(terminalDisplay.Font, FontStyle.Bold);
-                            break;
-                        case 4:
-                            terminalDisplay.SelectionFont = new Font(terminalDisplay.Font, FontStyle.Underline);
-                            break;
-                        default:
-                            if (code >= 30 && code <= 37)
-                                terminalDisplay.SelectionColor = AnsiCodeToColor(code - 30);
-                            else if (code >= 40 && code <= 47)
-                                terminalDisplay.SelectionBackColor = AnsiCodeToColor(code - 40);
-                            break;
-                    }
-                }
-            }
-        }
-
-        private Color AnsiCodeToColor(int code)
-        {
-            Color[] colors = { Color.Black, Color.Red, Color.Green, Color.Yellow, Color.Blue, Color.Magenta, Color.Cyan, Color.White };
-            return (code >= 0 && code < colors.Length) ? colors[code] : Color.White;
         }
     }
 }
